@@ -1,1 +1,126 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Global Dark Mode */
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;        /* horizontal center for root container */
+  align-items: center;            /* vertical center for root container */
+  color: #e0e0e0;               /* text color */
+}
+
+a {
+  color: #bb86fc;
+}
+
+a:hover {
+  color: #ffffff;
+}
+
+/* Make root fill viewport */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100vh;           /* full viewport height */
+  width: 100vw;            /* full viewport width */
+  display: flex;
+  flex-direction: column;  /* stack nav + content vertically */
+  background-color: #121212; /* dark background */
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+}
+
+#root > div > div {
+  flex: 1;                  /* fill remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* vertical center */
+  align-items: center;       /* horizontal center */
+  text-align: center;
+  gap: 1rem;
+}
+
+/* Fix bullet alignment in your existing container */
+.home-container ul {
+  text-align: left;       /* align bullet text properly */
+  padding-left: 1.2rem;   /* space between bullet and left edge */
+  margin: 1rem 0;
+}
+
+.home-container li {
+  margin-bottom: 0.5rem;  /* space between items */
+  line-height: 1.6;
+}
+
+.home-container li::marker {
+  color: #bb86fc;         /* optional: match theme color */
+  font-size: 1rem;        /* optional: nice size */
+}
+
+/* nav bar container */
+.nav-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  position: relative;
+  background-color: #1e1e1e; /* dark header */
+}
+
+/* nav links */
+.nav-bar a {
+  color: #bb86fc;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-bar a:hover {
+  color: #ffffff;
+}
+
+/* burger menu container */
+.burger-menu {
+  position: relative;
+}
+
+/* burger button */
+.burger-btn {
+  background: none;
+  border: none;
+  color: #bb86fc;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* dropdown menu */
+.burger-dropdown {
+  position: absolute;
+  top: 2rem;   /* below button */
+  right: 0;
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 4px;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+  z-index: 1000;
+}
+
+/* dropdown links */
+.burger-dropdown a {
+  color: #bb86fc;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+
+.burger-dropdown a:hover {
+  color: #ffffff;
+  background-color: #2a2a2a;
+}

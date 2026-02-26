@@ -2,9 +2,14 @@ import React from 'react';
 
 export function Contact() {
   return (
-    <div>
+    <div className="home-container">
       <h2>Contact Page</h2>
-      <p>Contact us at contact@example.com.</p>
+      <p>
+        You can reach me at{' '}
+        <a href="mailto:ruanadkruger@gmail.com" style={{ color: '#bb86fc' }}>
+          ruanadkruger@gmail.com
+        </a>
+      </p>
     </div>
   );
 }
