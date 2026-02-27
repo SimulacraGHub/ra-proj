@@ -9,9 +9,9 @@ body {
   padding: 0;
   min-height: 100vh;
   display: flex;
-  justify-content: center;        /* horizontal center for root container */
-  align-items: center;            /* vertical center for root container */
-  color: #e0e0e0;               /* text color */
+  justify-content: center; /* horizontal center for root container */
+  align-items: center; /* vertical center for root container */
+  color: #e0e0e0; /* text color */
 }
 
 a {
@@ -23,43 +23,45 @@ a:hover {
 }
 
 /* Make root fill viewport */
-html, body, #root {
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
-  height: 100vh;           /* full viewport height */
-  width: 100vw;            /* full viewport width */
+  height: 100vh; /* full viewport height */
+  width: 100vw; /* full viewport width */
   display: flex;
-  flex-direction: column;  /* stack nav + content vertically */
+  flex-direction: column; /* stack nav + content vertically */
   background-color: #121212; /* dark background */
   color: #e0e0e0;
   font-family: Arial, sans-serif;
 }
 
 #root > div > div {
-  flex: 1;                  /* fill remaining space */
+  flex: 1; /* fill remaining space */
   display: flex;
   flex-direction: column;
-  justify-content: center;   /* vertical center */
-  align-items: center;       /* horizontal center */
+  justify-content: center; /* vertical center */
+  align-items: center; /* horizontal center */
   text-align: center;
   gap: 1rem;
 }
 
 /* Fix bullet alignment in your existing container */
 .home-container ul {
-  text-align: left;       /* align bullet text properly */
-  padding-left: 1.2rem;   /* space between bullet and left edge */
+  text-align: left; /* align bullet text properly */
+  padding-left: 1.2rem; /* space between bullet and left edge */
   margin: 1rem 0;
 }
 
 .home-container li {
-  margin-bottom: 0.5rem;  /* space between items */
+  margin-bottom: 0.5rem; /* space between items */
   line-height: 1.6;
 }
 
 .home-container li::marker {
-  color: #bb86fc;         /* optional: match theme color */
-  font-size: 1rem;        /* optional: nice size */
+  color: #bb86fc; /* optional: match theme color */
+  font-size: 1rem; /* optional: nice size */
 }
 
 /* nav bar container */
@@ -101,7 +103,7 @@ html, body, #root {
 /* dropdown menu */
 .burger-dropdown {
   position: absolute;
-  top: 2rem;   /* below button */
+  top: 2rem; /* below button */
   right: 0;
   background-color: #1e1e1e;
   border: 1px solid #333;
@@ -123,4 +125,73 @@ html, body, #root {
 .burger-dropdown a:hover {
   color: #ffffff;
   background-color: #2a2a2a;
+}
+
+/* Weather Page */
+.weather-form {
+  margin: 20px;
+}
+
+.city-input {
+  padding: 10px;
+  font-size: 2rem;
+  font-weight: bold;
+  border: 2px solid hsla(0, 0%, 20%, 0.3);
+  border-radius: 10px;
+  margin: 10px;
+  width: 300px;
+}
+
+.get-weather-button {
+  padding: 20px 20px;
+  font-weight: bold;
+  font-size: 2rem;
+  background-color: rgb(51, 138, 51);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.get-weather-button:hover {
+  background-color: rgb(26, 70, 26);
+}
+
+.weather-card {
+  background: linear-gradient(180deg, hsl(210, 100%, 75%), hsl(40, 100%, 75%));
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.5);
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.city-display,
+.temperature-display {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: hsla(0, 0%, 0%, 0.8);
+  margin-bottom: 25px;
+}
+
+.humidity-display {
+  font-weight: bold;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  color: hsla(0, 0%, 0%, 0.75);
+}
+
+.description-display {
+  font-style: italic;
+  font-weight: bold;
+  font-size: 2rem;
+  color: hsla(0, 0%, 0%, 0.75);
+}
+
+.error-display {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: hsla(0, 0%, 0%, 0.75);
 }
