@@ -1,10 +1,38 @@
 import { useState } from 'react';
 import '../Styles/music-styles.css';
 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer,
+} from 'recharts';
+
 import { searchArtists } from '../services/musicService';
 import { Artist } from '../types/musicTypes';
 import { getAlbumsByArtist } from '../services/musicService';
 import { getTracksByAlbum } from '../services/musicService';
+import { Rectangle } from 'recharts';
+
+const CustomCursor = (props: any) => {
+  const { x, y, width, height } = props;
+  return (
+    <Rectangle
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      fill="rgba(130, 202, 157, 0.2)" // light green hover
+      stroke="#82ca9d" // border color
+      strokeWidth={2}
+      rx={6} // rounded corners
+      ry={6}
+    />
+  );
+};
 
 export function Music() {
   //Initial search
@@ -24,6 +52,9 @@ export function Music() {
 
   //state to track which albums are expanded
   const [expandedAlbums, setExpandedAlbums] = useState<Set<string>>(new Set());
+
+  //album sort state
+  const [albumSortOrder, setAlbumSortOrder] = useState<'asc' | 'desc'>('asc');
 
   const handleArtistClick = async (artist: Artist) => {
     setQuery(''); // optional: clear input
@@ -119,6 +150,17 @@ export function Music() {
     });
   };
 
+  const sortedAlbums = [...albums].sort((a, b) => {
+    const aAvg = a.averageTrackLengthMs ?? 0;
+    const bAvg = b.averageTrackLengthMs ?? 0;
+    return albumSortOrder === 'asc' ? aAvg - bAvg : bAvg - aAvg;
+  });
+
+  const avgTrackData = sortedAlbums.map((album) => ({
+    name: album.title,
+    avg: (album.averageTrackLengthMs ?? 0) / 60000,
+  }));
+
   return (
     <div className="music-container">
       {(loading || albumsLoading) && (
@@ -171,6 +213,66 @@ export function Music() {
             ))}
           </ul>
         </div>
+      )}
+
+      {/* Chart Section */}
+      {selectedArtist && !albumsLoading && avgTrackData.length > 0 && (
+        <>
+          <button
+            className="sort-button"
+            onClick={() =>
+              setAlbumSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
+            }
+            disabled={loadingTracks}
+          >
+            Sort by Average Track Length ({albumSortOrder === 'asc' ? '↑' : '↓'}
+            )
+          </button>
+
+          <div
+            className="chart-container"
+            style={{ width: '100%', height: 300, marginBottom: '1rem' }}
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={avgTrackData}
+                margin={{ top: 5, right: 20, left: 0, bottom: 50 }}
+              >
+                <CartesianGrid className="chart-grid" />
+                <XAxis
+                  dataKey="name"
+                  angle={-80} // rotate labels
+                  textAnchor="end" // rotation alignment
+                  interval={0} // show all labels
+                  height={60} // total space for labels
+                  tick={{ fontSize: 12, fill: '#fff' }}
+                  tickMargin={50} // moves labels down into empty space
+                  label={{ value: '', offset: 0 }} // prevents extra chart space usage
+                  //   tickFormatter={(value) =>          //truncation
+                  //     value.length > 12 ? value.slice(0, 12) + '…' : value
+                  //   }
+                />
+                <YAxis className="chart-axis" />
+                <Tooltip
+                  content={({ active, payload, label }) => {
+                    if (!active || !payload || payload.length === 0)
+                      return null;
+
+                    return (
+                      <div className="chart-tooltip-wrapper">
+                        <div className="tooltip-label">{label}</div>
+                        <div className="tooltip-value">
+                          {payload[0].value.toFixed(2)} min
+                        </div>
+                      </div>
+                    );
+                  }}
+                />
+                <Bar dataKey="avg" className="chart-bar" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </>
       )}
 
       {/* Albums Display */}

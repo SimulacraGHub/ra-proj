@@ -129,3 +129,102 @@
   color: #ddd;
   font-size: 0.95rem;
 }
+
+/* Sort button styling */
+.sort-button {
+  background-color: #1f1f1f; /* dark background to match music container */
+  color: #fff; /* white text for contrast */
+  border: 1px solid #82ca9d; /* match chart color for accent */
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sort-button:hover {
+  background-color: #82ca9d;
+  color: #1f1f1f;
+  border-color: #82ca9d;
+}
+
+.sort-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Chart container */
+/* Chart container */
+.chart-container {
+  width: 100%;
+  height: 300px;
+  margin-bottom: 1rem;
+  border: 2px solid #82ca9d;
+  border-radius: 12px;
+  padding: 10px;
+  background-color: #1f1f1f; /* dark chart background */
+}
+
+/* Bars */
+.chart-bar {
+  fill: #82ca9d;
+  rx: 6px;
+  ry: 6px; /* rounded top corners */
+}
+
+/* Grid lines */
+.chart-grid line {
+  stroke: #555;
+  stroke-dasharray: 3 3;
+}
+
+/* Axis text */
+/* X-axis labels */
+.chart-axis text {
+  fill: #fff;
+  font-size: 12px;
+  text-anchor: end; /* keeps rotation aligned */
+  dominant-baseline: hanging; /* anchor to top of rotated text */
+  transform: rotate(-45deg); /* keep rotation */
+  line-height: 1.2;
+  white-space: pre-wrap; /* allows wrapping */
+  word-break: break-word; /* wrap long names */
+}
+
+/* Tooltip wrapper (your custom content) */
+.chart-tooltip-wrapper {
+  background-color: #333; /* dark background */
+  color: #fff; /* text color */
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  border: 1px solid #82ca9d;
+  pointer-events: none;
+  line-height: 1.5;
+  min-width: 140px;
+  max-width: 220px;
+  white-space: normal; /* allow text wrapping */
+}
+
+/* Tooltip album name */
+.chart-tooltip-wrapper .tooltip-label {
+  font-weight: bold;
+  color: #82ca9d;
+  margin-bottom: 6px;
+  white-space: normal;
+}
+
+/* Tooltip value */
+.chart-tooltip-wrapper .tooltip-value {
+  color: #fff;
+}
+
+/* Hover cursor rectangle */
+.chart-cursor {
+  fill: rgba(130, 202, 157, 0.2);
+  stroke: #82ca9d;
+  stroke-width: 2px;
+  rx: 6px;
+  ry: 6px;
+}
