@@ -2,6 +2,7 @@
   padding: 2rem;
   max-width: 1100px;
   margin: 0 auto;
+  position: relative; /* required so overlay is positioned correctly */
 }
 
 .music-title {
@@ -70,4 +71,61 @@
 
 .artist-item {
   cursor: pointer;
+}
+
+/* Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  pointer-events: all;
+}
+
+/* Message + spinner container */
+.loading-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #222;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  gap: 1rem;
+}
+
+/* Spinner */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid rgba(255, 255, 255, 0.2); /* light border for background */
+  border-top-color: #fff; /* white segment for rotation */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: block; /* ensures it shows */
+}
+
+/* Spinner rotation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.artist-item ul {
+  list-style-type: disc;
+  color: #ddd;
+  font-size: 0.95rem;
 }

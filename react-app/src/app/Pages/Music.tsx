@@ -22,6 +22,9 @@ export function Music() {
   //State for loading tracks per album
   const [loadingTracks, setLoadingTracks] = useState(false);
 
+  //state to track which albums are expanded
+  const [expandedAlbums, setExpandedAlbums] = useState<Set<string>>(new Set());
+
   const handleArtistClick = async (artist: Artist) => {
     setQuery(''); // optional: clear input
     setSelectedArtist(artist);
@@ -104,8 +107,32 @@ export function Music() {
     }
   };
 
+  const toggleAlbum = (albumId: string) => {
+    setExpandedAlbums((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(albumId)) {
+        newSet.delete(albumId); // collapse if already expanded
+      } else {
+        newSet.add(albumId); // expand if not expanded
+      }
+      return newSet;
+    });
+  };
+
   return (
     <div className="music-container">
+      {(loading || albumsLoading) && (
+        <div className="loading-overlay">
+          <div className="loading-message">
+            <div className="spinner"></div>
+            <span>
+              {loading
+                ? 'Searching artists...'
+                : 'Loading albums and tracks...'}
+            </span>
+          </div>
+        </div>
+      )}
       <h1 className="music-title">Music Analytics Dashboard</h1>
 
       {/* Search Section */}
@@ -158,12 +185,32 @@ export function Music() {
             <ul className="artist-list">
               {albums.map((album) => (
                 <li key={album.id} className="artist-item">
-                  <strong>{album.title}</strong>
-                  {album.releaseDate && ` (${album.releaseDate})`}
-                  {album.averageTrackLengthMs !== undefined &&
-                    ` – Avg: ${(album.averageTrackLengthMs / 60000).toFixed(
-                      2
-                    )} min`}
+                  {/* Album clickable to expand/collapse */}
+                  <div
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => toggleAlbum(album.id)}
+                  >
+                    <strong>{album.title}</strong>
+                    {album.releaseDate && ` (${album.releaseDate})`}
+                    {album.averageTrackLengthMs !== undefined &&
+                      ` – Avg: ${(album.averageTrackLengthMs / 60000).toFixed(
+                        2
+                      )} min`}
+                  </div>
+
+                  {/* Track list, visible only if album is expanded */}
+                  {expandedAlbums.has(album.id) &&
+                    album.tracks &&
+                    album.tracks.length > 0 && (
+                      <ul style={{ marginLeft: '1rem', marginTop: '0.5rem' }}>
+                        {album.tracks.map((track) => (
+                          <li key={track.id}>
+                            {track.title} –{' '}
+                            {(track.lengthMs / 60000).toFixed(2)} min
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                 </li>
               ))}
             </ul>
