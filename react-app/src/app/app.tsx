@@ -4,7 +4,7 @@ import { Home } from './Pages/Home';
 import { About } from './Pages/About';
 import { Contact } from './Pages/Contact';
 import { Weather } from './Pages/Weather';
-
+import { Music } from './Pages/Music';
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,11 +19,18 @@ export default function App() {
 
         {/* Burger menu */}
         <div className="burger-menu">
-          <button className="burger-btn" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
+          <button className="burger-btn" onClick={() => setMenuOpen(!menuOpen)}>
+            ☰
+          </button>
           {menuOpen && (
             <div className="burger-dropdown">
-              <Link to="/weather" onClick={() => setMenuOpen(false)}>Weather</Link>
-              <Link to="/placeholder" onClick={() => setMenuOpen(false)}>Placeholder</Link>
+              <Link to="/weather" onClick={() => setMenuOpen(false)}>
+                Weather
+              </Link>
+              <Link to="/music" onClick={() => setMenuOpen(false)}>
+                Music
+              </Link>
+              {/* <Link to="/placeholder" onClick={() => setMenuOpen(false)}>Placeholder</Link> */}
             </div>
           )}
         </div>
@@ -35,7 +42,8 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/weather" element={<Weather />} />
-        <Route path="/placeholder" element={<div>Placeholder Page</div>} />
+        <Route path="/music" element={<Music />} />
+        {/* <Route path="/placeholder" element={<div>Placeholder Page</div>} /> */}
       </Routes>
     </div>
   );
