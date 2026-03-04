@@ -49,14 +49,15 @@
   font-size: 1rem;
   border: none;
   border-radius: 6px;
-  background-color: #4f46e5;
-  color: white;
+  background-color: #bb86fc;
+  color: black;
   cursor: pointer;
+  font-weight: bold;
   transition: background-color 0.2s ease, transform 0.05s ease;
 }
 
 .get-weather-button:hover {
-  background-color: #4338ca;
+  background-color: #976ccc;
 }
 .get-weather-button:active {
   transform: scale(0.97);
