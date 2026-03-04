@@ -5,6 +5,12 @@
   "references": [
     {
       "path": "./shared"
+    },
+    {
+      "path": "./server-e2e"
+    },
+    {
+      "path": "./server"
     }
   ]
 }
