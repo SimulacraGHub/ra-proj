@@ -228,3 +228,29 @@
   rx: 6px;
   ry: 6px;
 }
+
+.popup-message {
+  position: absolute; /* or fixed, depending on layout */
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f8d7da; /* light red */
+  color: #721c24; /* dark red text */
+  padding: 8px 16px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  z-index: 1000;
+  animation: fadeOut 4s forwards; /* optional */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

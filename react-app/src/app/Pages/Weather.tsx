@@ -1,5 +1,5 @@
-import * as WeatherLib from '../../../../libs/shared/src/lib/weather';
-import '../Styles/weather-styles.css';
+import * as WeatherLib from '@weather';
+import '@styles/weather-styles.css';
 import React, { useState } from 'react';
 
 export function Weather() {
@@ -14,7 +14,8 @@ export function Weather() {
     e.preventDefault();
 
     if (!city) {
-      setError('Please enter a city');
+      setError(null); // reset first
+      setTimeout(() => setError('Please enter a city'), 0); // then set again
       setWeatherData(null);
       return;
     }
@@ -25,8 +26,9 @@ export function Weather() {
       setWeatherData(data);
       setError(null);
     } catch (err: any) {
-      setError(err.message);
       setWeatherData(null);
+      setError(null); // reset first
+      setTimeout(() => setError(err.message), 50); // show GET error popup
       console.error(err.message);
     } finally {
       setLoading(false); // stop loading
@@ -35,6 +37,7 @@ export function Weather() {
 
   return (
     <div className="weather-container">
+      {error && <p className="error-display">{error}</p>}
       <h1 className="weather-title">Weather Search Dashboard</h1>
       <form className="weather-form" onSubmit={handleSubmit}>
         <input
@@ -48,8 +51,6 @@ export function Weather() {
           {loading ? 'Loading...' : 'Get Weather'}
         </button>
       </form>
-
-      {error && <p className="error-display">{error}</p>}
 
       {weatherData && (
         <div className="weather-card">

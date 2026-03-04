@@ -12,11 +12,12 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@ra-proj/shared": ["libs/shared/src/index.ts"]
+      "@ra-proj/shared": ["libs/shared/src/index.ts"],
+      "@weather": ["libs/shared/src/lib/weather.ts"],
+      "@styles/*": ["react-app/src/app/Styles/*"]
     }
   },
-  "files": [],
-  "include": [],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "references": [
     {
       "path": "./tsconfig.app.json"

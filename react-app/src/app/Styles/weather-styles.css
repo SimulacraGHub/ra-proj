@@ -64,7 +64,7 @@
 
 .weather-card {
   background: linear-gradient(180deg, hsl(210, 100%, 75%), hsl(40, 100%, 75%));
-  padding: 50px;
+  padding: 40px;
   border-radius: 10px;
   box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.5);
   min-width: 300px;
@@ -75,20 +75,23 @@
 
 .city-display,
 .temperature-display {
+  margin-top: 15px;
   font-size: 3.5rem;
   font-weight: bold;
   color: hsla(0, 0%, 0%, 0.8);
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .humidity-display {
+  margin-top: 15px;
   font-weight: bold;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   font-size: 2rem;
   color: hsla(0, 0%, 0%, 0.75);
 }
 
 .description-display {
+  margin-top: 15px;
   font-style: italic;
   font-weight: bold;
   font-size: 2rem;
@@ -98,5 +101,35 @@
 .error-display {
   font-size: 2.5rem;
   font-weight: bold;
-  color: hsla(0, 0%, 0%, 0.75);
+  color: hsla(0, 0%, 86%, 0.75);
+}
+
+.error-display {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 8px 16px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  font-size: 1rem;
+  font-weight: 500;
+  animation: fadeOut 4s forwards; /* optional */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

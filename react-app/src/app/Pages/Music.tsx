@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import '../Styles/music-styles.css';
-
+import '@styles/music-styles.css';
 import {
   BarChart,
   Bar,
@@ -10,7 +9,6 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from 'recharts';
-
 import { searchArtists } from '../services/musicService';
 import { Artist } from '../types/musicTypes';
 import { getAlbumsByArtist } from '../services/musicService';
@@ -35,6 +33,9 @@ const CustomCursor = (props: any) => {
 };
 
 export function Music() {
+  //old popup when input is empty
+  const [popupMessage, setPopupMessage] = useState<string | null>(null);
+
   //Initial search
   const [query, setQuery] = useState('');
   const [artists, setArtists] = useState<Artist[]>([]);
@@ -76,7 +77,15 @@ export function Music() {
   };
   /////////////
   const searchArtist = async () => {
-    if (!query.trim()) return;
+    //old custom popup
+    if (!query.trim()) {
+      // Show popup
+      setPopupMessage('Please enter an artist name');
+
+      // Hide it automatically after 2 seconds
+      setTimeout(() => setPopupMessage(null), 2000);
+      return;
+    }
 
     // Clear previous artist selection & albums
     setSelectedArtist(null);
@@ -176,6 +185,8 @@ export function Music() {
         </div>
       )}
       <h1 className="music-title">Music Analytics Dashboard</h1>
+
+      {popupMessage && <div className="popup-message">{popupMessage}</div>}
 
       {/* Search Section */}
       <div className="search-section">

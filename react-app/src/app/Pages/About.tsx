@@ -6,10 +6,9 @@ export function About() {
       <h2>About This Site</h2>
       <p>
         This website is a demonstration of a{' '}
-        <strong>full-stack monorepo</strong>
-        setup using <strong>Nx</strong>, <strong>React</strong>, and{' '}
-        <strong>Node.js</strong>. It is designed as a showcase for technical
-        portfolios.
+        <strong>full-stack monorepo</strong> setup using <strong>Nx</strong>,{' '}
+        <strong>React</strong>, and <strong>Node.js</strong>. It is designed as
+        a showcase for technical portfolios.
       </p>
       <p>This project demonstrates:</p>
       <ul>
