@@ -1,32 +1,48 @@
+/* === Override global root flex for Home page === */
+#root > div > div.home-page {
+  display: block !important; /* cancel global flex */
+  flex: unset !important;
+  justify-content: unset !important;
+  align-items: unset !important;
+  height: 100vh !important; /* full viewport height */
+  overflow: hidden !important;
+  position: relative; /* allow absolute bg inside */
+}
+
+/* Full viewport background as pseudo-element */
+.home-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/images/bgroundMain.jpg') center/cover no-repeat fixed;
+  z-index: 0;
+}
+
+/* Text container on top */
 .home-container {
   max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 3rem 2rem;
+  width: 90%;
+  margin: 2rem auto 0 auto; /* spacing from top */
+  padding: 2rem 1.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
   text-align: center;
   color: #e0e0e0;
+  position: relative; /* ensure it sits above pseudo-element */
+  z-index: 1;
 }
 
 .home-container h2 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
   color: #bb86fc;
 }
 
 .home-container p {
   font-size: 1.2rem;
-  margin-bottom: 1rem;
   line-height: 1.6;
-}
-
-.home-image-placeholder {
-  margin-top: 2rem;
-  width: 100%;
-  height: 300px;
-  background-color: #1f1f1f;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #82ca9d;
-  border-radius: 8px;
+  margin-bottom: 1rem;
 }
