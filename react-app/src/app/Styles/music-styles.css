@@ -6,7 +6,7 @@
 }
 
 .music-title {
-  font-size: 2rem;
+  font-size: 1.5em;
   margin-bottom: 1.5rem;
   font-weight: 600;
 }
@@ -19,11 +19,12 @@
 
 .search-input {
   padding: 0.6rem 0.8rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   width: 320px;
   border: 1px solid #ccc;
   border-radius: 6px;
   transition: border 0.2s ease;
+  background-color: #1e1e1e;
 }
 
 .search-input:focus {
@@ -33,7 +34,7 @@
 
 .search-button {
   padding: 0.6rem 1.2rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   border: none;
   border-radius: 6px;
   background-color: #bb86fc;
@@ -267,4 +268,67 @@
 /* Hide outline when clicked by mouse, but keep it for keyboard navigation */
 .recharts-wrapper *:focus:not(:focus-visible) {
   outline: none;
+}
+
+.music-info-box {
+  position: fixed;
+  top: 70px;
+  left: 20px;
+
+  width: 100px;
+  padding: 1rem;
+
+  background-color: #1f1f1f;
+  color: #fff;
+
+  border: 1px solid #82ca9d;
+  border-radius: 10px;
+
+  z-index: 1000;
+}
+
+.music-info-wrapper {
+  position: fixed;
+  top: 70px; /* adjust for navbar height */
+  left: 20px;
+  z-index: 1000;
+}
+
+/* Always visible small label */
+.music-info-label {
+  background-color: #1f1f1f;
+  color: #82ca9d;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid #82ca9d;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Hidden popup */
+.music-info-popup {
+  position: absolute;
+  top: 110%;
+  left: 0;
+
+  width: 280px;
+  padding: 1rem;
+
+  background-color: #1f1f1f;
+  color: #fff;
+
+  border: 1px solid #82ca9d;
+  border-radius: 10px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Show popup on hover */
+.music-info-wrapper:hover .music-info-popup {
+  opacity: 1;
+  pointer-events: auto;
 }

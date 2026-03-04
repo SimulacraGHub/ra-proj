@@ -176,167 +176,199 @@ export function Music() {
   }));
 
   return (
-    <div className="music-container">
-      {(loading || albumsLoading) && (
-        <div className="loading-overlay">
-          <div className="loading-message">
-            <div className="spinner"></div>
-            <span>
-              {loading
-                ? 'Searching artists...'
-                : 'Loading albums and tracks... Select an album to expand'}
-            </span>
-          </div>
+    <>
+      <div className="info-hover" style={{ color: '#82ca9d' }}>
+        <div className="info-hover-label">About this page</div>
+
+        <div className="info-hover-popup">
+          <h4>Music Analytics Dashboard</h4>
+
+          <p>
+            Search for an artist to view their albums and compare average track
+            lengths visually using the bar chart.
+          </p>
+
+          <p>Click an album to expand and view individual track durations.</p>
+
+          <p>
+            This page uses data fetched from the public MusicBrainz API. While
+            the API provides extensive artist and album information, some data
+            may be incomplete, inconsistent, or community-maintained, which can
+            result in missing release dates, duplicate entries, or inaccurate
+            track lengths.
+          </p>
+
+          <p>
+            The frontend communicates with a backend service layer that handles
+            API requests and data transformation before rendering it in the
+            dashboard. This separation keeps the UI focused on presentation
+            while the backend manages data retrieval and processing.
+          </p>
         </div>
-      )}
-      <h1 className="music-title">Music Analytics Dashboard</h1>
-
-      {popupMessage && <div className="popup-message">{popupMessage}</div>}
-      {error && <div className="popup-message">{error}</div>}
-
-      {/* Search Section */}
-      <div className="search-section">
-        <input
-          className="search-input"
-          type="text"
-          placeholder="Search for an artist..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && query.trim()) {
-              searchArtist();
-            }
-          }}
-        />
-        <button className="search-button" onClick={searchArtist}>
-          Search
-        </button>
       </div>
 
-      {/* Artist Search Results */}
-      {artists.length > 0 && (
-        <div className="artist-results-container">
-          <ul className="artist-list">
-            {artists.map((artist) => (
-              <li
-                key={artist.id}
-                className="artist-item"
-                onClick={() => handleArtistClick(artist)}
-              >
-                <strong>{artist.name}</strong>
-                {artist.country && ` (${artist.country})`}
-                {artist.disambiguation && ` – ${artist.disambiguation}`}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Chart Section */}
-      {selectedArtist && !albumsLoading && avgTrackData.length > 0 && (
-        <>
-          <button
-            className="sort-button"
-            onClick={() =>
-              setAlbumSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
-            }
-            disabled={loadingTracks}
-          >
-            Sort by Average Track Length ({albumSortOrder === 'asc' ? '↑' : '↓'}
-            )
-          </button>
-
-          <div
-            className="chart-container"
-            style={{ width: '100%', height: 300, marginBottom: '1rem' }}
-          >
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={avgTrackData}
-                margin={{ top: 5, right: 20, left: 0, bottom: 50 }}
-              >
-                <CartesianGrid className="chart-grid" />
-                <XAxis
-                  dataKey="name"
-                  angle={-80} // rotate labels
-                  textAnchor="end" // rotation alignment
-                  interval={0} // show all labels
-                  height={60} // total space for labels
-                  tick={{ fontSize: 12, fill: '#fff' }}
-                  tickMargin={50} // moves labels down into empty space
-                  label={{ value: '', offset: 0 }} // prevents extra chart space usage
-                  //   tickFormatter={(value) =>          //truncation
-                  //     value.length > 12 ? value.slice(0, 12) + '…' : value
-                  //   }
-                />
-                <YAxis className="chart-axis" />
-                <Tooltip
-                  content={({ active, payload, label }) => {
-                    if (!active || !payload || payload.length === 0)
-                      return null;
-
-                    return (
-                      <div className="chart-tooltip-wrapper">
-                        <div className="tooltip-label">{label}</div>
-                        <div className="tooltip-value">
-                          {payload[0].value.toFixed(2)} min
-                        </div>
-                      </div>
-                    );
-                  }}
-                />
-                <Bar dataKey="avg" className="chart-bar" />
-              </BarChart>
-            </ResponsiveContainer>
+      <div className="music-container">
+        {(loading || albumsLoading) && (
+          <div className="loading-overlay">
+            <div className="loading-message">
+              <div className="spinner"></div>
+              <span>
+                {loading
+                  ? 'Searching artists...'
+                  : 'Loading albums and tracks... Select an album to expand'}
+              </span>
+            </div>
           </div>
-        </>
-      )}
+        )}
+        <h1 className="music-title">Music Analytics Dashboard</h1>
 
-      {/* Albums Display */}
-      {selectedArtist && (
-        <div className="album-results-container">
-          <h2>Albums by {selectedArtist.name}</h2>
+        {popupMessage && <div className="popup-message">{popupMessage}</div>}
+        {error && <div className="popup-message">{error}</div>}
 
-          {albumsLoading && <p>Loading albums...</p>}
-          {albumsError && <p style={{ color: 'red' }}>{albumsError}</p>}
+        {/* Search Section */}
+        <div className="search-section">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Search for an artist..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && query.trim()) {
+                searchArtist();
+              }
+            }}
+          />
+          <button className="search-button" onClick={searchArtist}>
+            Search
+          </button>
+        </div>
 
-          {albums.length > 0 ? (
+        {/* Artist Search Results */}
+        {artists.length > 0 && (
+          <div className="artist-results-container">
             <ul className="artist-list">
-              {albums.map((album) => (
+              {artists.map((artist) => (
                 <li
-                  key={album.id}
+                  key={artist.id}
                   className="artist-item"
-                  onClick={() => toggleAlbum(album.id)}
-                  style={{ cursor: 'pointer' }} // pointer for whole item
+                  onClick={() => handleArtistClick(artist)}
                 >
-                  <strong>{album.title}</strong>
-                  {album.releaseDate && ` (${album.releaseDate})`}
-                  {album.averageTrackLengthMs !== undefined &&
-                    ` – Avg: ${(album.averageTrackLengthMs / 60000).toFixed(
-                      2
-                    )} min`}
-
-                  {/* Track list, visible only if album is expanded */}
-                  {expandedAlbums.has(album.id) &&
-                    album.tracks &&
-                    album.tracks.length > 0 && (
-                      <ul style={{ marginLeft: '1rem', marginTop: '0.5rem' }}>
-                        {album.tracks.map((track) => (
-                          <li key={track.id}>
-                            {track.title} –{' '}
-                            {(track.lengthMs / 60000).toFixed(2)} min
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                  <strong>{artist.name}</strong>
+                  {artist.country && ` (${artist.country})`}
+                  {artist.disambiguation && ` – ${artist.disambiguation}`}
                 </li>
               ))}
             </ul>
-          ) : (
-            !albumsLoading && <p>No albums found.</p>
-          )}
-        </div>
-      )}
-    </div>
+          </div>
+        )}
+
+        {/* Chart Section */}
+        {selectedArtist && !albumsLoading && avgTrackData.length > 0 && (
+          <>
+            <button
+              className="sort-button"
+              onClick={() =>
+                setAlbumSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
+              }
+              disabled={loadingTracks}
+            >
+              Sort by Average Track Length (
+              {albumSortOrder === 'asc' ? '↑' : '↓'})
+            </button>
+
+            <div
+              className="chart-container"
+              style={{ width: '100%', height: 300, marginBottom: '1rem' }}
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={avgTrackData}
+                  margin={{ top: 5, right: 20, left: 0, bottom: 50 }}
+                >
+                  <CartesianGrid className="chart-grid" />
+                  <XAxis
+                    dataKey="name"
+                    angle={-80} // rotate labels
+                    textAnchor="end" // rotation alignment
+                    interval={0} // show all labels
+                    height={60} // total space for labels
+                    tick={{ fontSize: 12, fill: '#fff' }}
+                    tickMargin={50} // moves labels down into empty space
+                    label={{ value: '', offset: 0 }} // prevents extra chart space usage
+                    //   tickFormatter={(value) =>          //truncation
+                    //     value.length > 12 ? value.slice(0, 12) + '…' : value
+                    //   }
+                  />
+                  <YAxis className="chart-axis" />
+                  <Tooltip
+                    content={({ active, payload, label }) => {
+                      if (!active || !payload || payload.length === 0)
+                        return null;
+
+                      return (
+                        <div className="chart-tooltip-wrapper">
+                          <div className="tooltip-label">{label}</div>
+                          <div className="tooltip-value">
+                            {payload[0].value.toFixed(2)} min
+                          </div>
+                        </div>
+                      );
+                    }}
+                  />
+                  <Bar dataKey="avg" className="chart-bar" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </>
+        )}
+
+        {/* Albums Display */}
+        {selectedArtist && (
+          <div className="album-results-container">
+            <h2>Albums by {selectedArtist.name}</h2>
+
+            {albumsLoading && <p>Loading albums...</p>}
+            {albumsError && <p style={{ color: 'red' }}>{albumsError}</p>}
+
+            {albums.length > 0 ? (
+              <ul className="artist-list">
+                {albums.map((album) => (
+                  <li
+                    key={album.id}
+                    className="artist-item"
+                    onClick={() => toggleAlbum(album.id)}
+                    style={{ cursor: 'pointer' }} // pointer for whole item
+                  >
+                    <strong>{album.title}</strong>
+                    {album.releaseDate && ` (${album.releaseDate})`}
+                    {album.averageTrackLengthMs !== undefined &&
+                      ` – Avg: ${(album.averageTrackLengthMs / 60000).toFixed(
+                        2
+                      )} min`}
+
+                    {/* Track list, visible only if album is expanded */}
+                    {expandedAlbums.has(album.id) &&
+                      album.tracks &&
+                      album.tracks.length > 0 && (
+                        <ul style={{ marginLeft: '1rem', marginTop: '0.5rem' }}>
+                          {album.tracks.map((track) => (
+                            <li key={track.id}>
+                              {track.title} –{' '}
+                              {(track.lengthMs / 60000).toFixed(2)} min
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              !albumsLoading && <p>No albums found.</p>
+            )}
+          </div>
+        )}
+      </div>
+    </>
   );
 }

@@ -27,7 +27,7 @@ body,
   margin: 0;
   padding: 0;
   height: 100vh; /* full viewport height */
-  width: 100vw; /* full viewport width */
+  width: 100%; /* full viewport width */
   display: flex;
   flex-direction: column; /* stack nav + content vertically */
   background-color: #121212; /* dark background */
@@ -45,7 +45,15 @@ body,
   gap: 1rem;
 }
 
-/* Fix bullet alignment in your existing container */
+.home-container {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 2rem;
+  box-sizing: border-box;
+}
+
+/* bullet alignment in your existing container */
 .home-container ul {
   text-align: left; /* align bullet text properly */
   padding-left: 1.2rem; /* space between bullet and left edge */
@@ -174,4 +182,48 @@ body,
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* Reusable Info Hover Component */
+.info-hover {
+  position: fixed;
+  top: 70px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.info-hover-label {
+  background-color: #1f1f1f;
+  color: #82ca9d;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.info-hover-popup {
+  position: absolute;
+  top: 110%;
+  left: 0;
+
+  width: 300px;
+  padding: 1rem;
+
+  background-color: #1f1f1f;
+  color: #fff;
+
+  border: 1px solid currentColor;
+  border-radius: 10px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.info-hover:hover .info-hover-popup {
+  opacity: 1;
+  pointer-events: auto;
 }

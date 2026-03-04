@@ -1,7 +1,7 @@
 /* Weather Page */
 
 .weather-title {
-  font-size: 2rem;
+  font-size: 1.5em;
   margin-bottom: 1.5rem;
   font-weight: 600;
 }
@@ -37,16 +37,17 @@
 
 .city-input {
   padding: 0.6rem 0.8rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   width: 320px;
   border: 1px solid #ccc;
   border-radius: 6px;
   transition: border 0.2s ease;
+  background-color: #1e1e1e;
 }
 
 .get-weather-button {
   padding: 0.6rem 1.2rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   border: none;
   border-radius: 6px;
   background-color: #bb86fc;
@@ -133,4 +134,47 @@
   100% {
     opacity: 0;
   }
+}
+
+.weather-info-wrapper {
+  position: fixed;
+  top: 70px; /* adjust to your navbar height */
+  left: 20px;
+  z-index: 1000;
+}
+
+.weather-info-label {
+  background-color: #1f1f1f;
+  color: #4f9cff;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid #4f9cff;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.weather-info-popup {
+  position: absolute;
+  top: 110%;
+  left: 0;
+
+  width: 300px;
+  padding: 1rem;
+
+  background-color: #1f1f1f;
+  color: #fff;
+
+  border: 1px solid #4f9cff;
+  border-radius: 10px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.weather-info-wrapper:hover .weather-info-popup {
+  opacity: 1;
+  pointer-events: auto;
 }

@@ -1,0 +1,22 @@
+.about-container {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 2rem;
+  box-sizing: border-box;
+}
+.about-container ul {
+  text-align: left; /* align bullet text properly */
+  padding-left: 1.2rem; /* space between bullet and left edge */
+  margin: 1rem 0;
+}
+
+.about-container li {
+  margin-bottom: 0.5rem; /* space between items */
+  line-height: 1.6;
+}
+
+.about-container li::marker {
+  color: #bb86fc; /* optional: match theme color */
+  font-size: 1rem; /* optional: nice size */
+}

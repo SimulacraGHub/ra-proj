@@ -1,31 +1,69 @@
+import '@styles/about-styles.css';
+
 export function About() {
   return (
-    <div className="home-container">
+    <div className="about-container">
       <h2>About This Site</h2>
+
       <p>
         This website is a demonstration of a{' '}
-        <strong>full-stack monorepo</strong> setup using <strong>Nx</strong>,{' '}
-        <strong>React</strong>, and <strong>Node.js</strong>. It is designed as
-        a showcase for technical portfolios.
+        <strong>full-stack monorepo</strong> architecture built using{' '}
+        <strong>Nx</strong>, <strong>React</strong>, and{' '}
+        <strong>Node.js</strong>. It serves as a technical portfolio project
+        showcasing modular design, API integrations, and scalable
+        frontend-backend separation.
       </p>
-      <p>This project demonstrates:</p>
+
+      <p>This project includes:</p>
+
       <ul>
-        <li>Modular architecture with multiple apps and shared libraries</li>
-        <li>Clean, maintainable React components</li>
-        <li>Routing and page structure using React Router</li>
         <li>
-          Backend API with <strong>Express</strong> for server-side logic
+          A <strong>Music Analytics Dashboard</strong> that consumes data from
+          the <strong>MusicBrainz API</strong>, processes album and track data
+          through a backend service layer, and visualizes insights using{' '}
+          <strong>Recharts</strong>.
         </li>
+
         <li>
-          Email integration via <strong>Resend API</strong> for full-stack
-          features
+          A <strong>Weather Search Dashboard</strong> that retrieves real-time
+          weather data from the <strong>OpenWeather API</strong> via a secure
+          backend integration.
+        </li>
+
+        <li>
+          A <strong>Contact Page</strong> with full-stack email functionality
+          powered by the <strong>Resend API</strong>, handled securely through
+          the backend.
+        </li>
+
+        <li>
+          A modular backend built with <strong>Express</strong> that manages API
+          communication, data transformation, and secure handling of external
+          services.
+        </li>
+
+        <li>
+          Shared libraries for reusable utilities, type definitions, and service
+          abstraction across applications within the monorepo.
         </li>
       </ul>
+
       <p>
-        This serves as a working example of my ability to structure and build
-        scalable
-        <strong> frontend and backend applications</strong> in a single
-        monorepo.
+        This application demonstrates clean separation of concerns: the frontend
+        focuses on presentation and user interaction, while the backend manages
+        API communication, data validation, and external service integrations.
+      </p>
+
+      <p>
+        It also highlights practical considerations when working with
+        third-party APIs, including rate limits, incomplete datasets, and
+        external service reliability.
+      </p>
+
+      <p>
+        Overall, this project reflects my ability to design and implement
+        scalable, maintainable <strong>full-stack applications</strong> within a
+        structured monorepo environment.
       </p>
     </div>
   );
