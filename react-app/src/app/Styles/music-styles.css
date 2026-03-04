@@ -262,3 +262,8 @@
     opacity: 0;
   }
 }
+
+/* Hide outline when clicked by mouse, but keep it for keyboard navigation */
+.recharts-wrapper *:focus:not(:focus-visible) {
+  outline: none;
+}

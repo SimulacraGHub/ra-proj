@@ -10,27 +10,27 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { searchArtists } from '../services/musicService';
-import { Artist } from '../types/musicTypes';
+import { Artist, Album } from '../types/musicTypes';
 import { getAlbumsByArtist } from '../services/musicService';
 import { getTracksByAlbum } from '../services/musicService';
-import { Rectangle } from 'recharts';
+//import { Rectangle } from 'recharts';
 
-const CustomCursor = (props: any) => {
-  const { x, y, width, height } = props;
-  return (
-    <Rectangle
-      x={x}
-      y={y}
-      width={width}
-      height={height}
-      fill="rgba(130, 202, 157, 0.2)" // light green hover
-      stroke="#82ca9d" // border color
-      strokeWidth={2}
-      rx={6} // rounded corners
-      ry={6}
-    />
-  );
-};
+// const CustomCursor = (props: any) => {
+//   const { x, y, width, height } = props;
+//   return (
+//     <Rectangle
+//       x={x}
+//       y={y}
+//       width={width}
+//       height={height}
+//       fill="rgba(130, 202, 157, 0.2)" // light green hover
+//       stroke="#82ca9d" // border color
+//       strokeWidth={2}
+//       rx={6} // rounded corners
+//       ry={6}
+//     />
+//   );
+// };
 
 export function Music() {
   //old popup when input is empty
@@ -98,6 +98,11 @@ export function Music() {
     try {
       const results = await searchArtists(query);
       setArtists(results);
+      if (results.length === 0) {
+        // Show popup if no artists found
+        setPopupMessage('No artists found');
+        setTimeout(() => setPopupMessage(null), 4000);
+      }
     } catch (err: any) {
       setError(err.message || 'Something went wrong');
     } finally {
@@ -187,6 +192,7 @@ export function Music() {
       <h1 className="music-title">Music Analytics Dashboard</h1>
 
       {popupMessage && <div className="popup-message">{popupMessage}</div>}
+      {error && <div className="popup-message">{error}</div>}
 
       {/* Search Section */}
       <div className="search-section">
