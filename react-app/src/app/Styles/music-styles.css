@@ -124,6 +124,14 @@
   }
 }
 
+.artist-item {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  user-select: none; /* Standard */
+  cursor: pointer;
+}
+
 .artist-item ul {
   list-style-type: disc;
   color: #ddd;

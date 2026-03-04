@@ -179,7 +179,7 @@ export function Music() {
             <span>
               {loading
                 ? 'Searching artists...'
-                : 'Loading albums and tracks...'}
+                : 'Loading albums and tracks... Select an album to expand'}
             </span>
           </div>
         </div>
@@ -297,19 +297,18 @@ export function Music() {
           {albums.length > 0 ? (
             <ul className="artist-list">
               {albums.map((album) => (
-                <li key={album.id} className="artist-item">
-                  {/* Album clickable to expand/collapse */}
-                  <div
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => toggleAlbum(album.id)}
-                  >
-                    <strong>{album.title}</strong>
-                    {album.releaseDate && ` (${album.releaseDate})`}
-                    {album.averageTrackLengthMs !== undefined &&
-                      ` – Avg: ${(album.averageTrackLengthMs / 60000).toFixed(
-                        2
-                      )} min`}
-                  </div>
+                <li
+                  key={album.id}
+                  className="artist-item"
+                  onClick={() => toggleAlbum(album.id)}
+                  style={{ cursor: 'pointer' }} // pointer for whole item
+                >
+                  <strong>{album.title}</strong>
+                  {album.releaseDate && ` (${album.releaseDate})`}
+                  {album.averageTrackLengthMs !== undefined &&
+                    ` – Avg: ${(album.averageTrackLengthMs / 60000).toFixed(
+                      2
+                    )} min`}
 
                   {/* Track list, visible only if album is expanded */}
                   {expandedAlbums.has(album.id) &&
