@@ -16,9 +16,23 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100%; /* fills home-page div exactly */
   background: url('/images/bgroundMain.jpg') center/cover no-repeat fixed;
   z-index: 0;
+}
+
+.home-page {
+  position: relative; /* for ::before */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Fill viewport minus navbar */
+  height: calc(100vh - 68px);
+  max-height: calc(100vh - 68px);
+
+  overflow: hidden; /* prevents scroll only for this div */
+  box-sizing: border-box;
 }
 
 /* Text container on top */
@@ -38,7 +52,7 @@
 .home-container h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: #bb86fc;
+  color: #ffffff;
 }
 
 .home-container p {
