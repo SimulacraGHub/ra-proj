@@ -19,7 +19,8 @@
     "baseUrl": ".",                      
     "paths": {
       "@ra-proj/shared": ["libs/shared/src/index.ts"],
-      "@weather": ["libs/shared/src/lib/weather.ts"]
+      "@weather": ["libs/shared/src/lib/weather.ts"],
+      "@pagesLib/contact": ["libs/shared/src/lib/contact.ts"]
     }
   }
 }

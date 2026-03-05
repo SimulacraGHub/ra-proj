@@ -9,48 +9,45 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from 'recharts';
-import { searchArtists } from '../services/musicService';
 import { Artist, Album } from '../types/musicTypes';
-import { getAlbumsByArtist } from '../services/musicService';
-import { getTracksByAlbum } from '../services/musicService';
+import {
+  searchArtists,
+  getAlbumsByArtist,
+  fetchTracksForAlbums,
+  sortAlbumsByAvgTrackLength,
+  albumsToChartData,
+} from '../services/musicService';
 
 export function Music() {
-  //popup when input is empty
+  // UI state
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
-
-  //Initial search
   const [query, setQuery] = useState('');
   const [artists, setArtists] = useState<Artist[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  //Artist selection
   const [selectedArtist, setSelectedArtist] = useState<Artist | null>(null);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [albumsLoading, setAlbumsLoading] = useState(false);
   const [albumsError, setAlbumsError] = useState<string | null>(null);
 
-  //State for loading tracks per album
   const [loadingTracks, setLoadingTracks] = useState(false);
-
-  //state to track which albums are expanded
   const [expandedAlbums, setExpandedAlbums] = useState<Set<string>>(new Set());
-
-  //album sort state
   const [albumSortOrder, setAlbumSortOrder] = useState<'asc' | 'desc'>('asc');
 
+  // Artist search
   const handleArtistClick = async (artist: Artist) => {
-    setQuery(''); // optional: clear input
+    setQuery('');
     setSelectedArtist(artist);
-    setArtists([]); // hide artist search results
+    setArtists([]);
     setAlbums([]);
     setAlbumsError(null);
     setAlbumsLoading(true);
 
     try {
       const artistAlbums = await getAlbumsByArtist(artist.id);
-      setAlbums(artistAlbums);
-      await fetchTracksForAlbums(artistAlbums); // fetch tracks and calculate average
+      const albumsWithTracks = await fetchTracksForAlbums(artistAlbums);
+      setAlbums(albumsWithTracks);
     } catch (err: any) {
       setAlbumsError(err.message || 'Failed to load albums');
     } finally {
@@ -58,22 +55,16 @@ export function Music() {
     }
   };
 
-  const searchArtist = async () => {
-    //custom popup
+  const searchArtistHandler = async () => {
     if (!query.trim()) {
-      // Show popup
       setPopupMessage('Please enter an artist name');
-
-      // Hide it automatically after 2 seconds
       setTimeout(() => setPopupMessage(null), 2000);
       return;
     }
 
-    // Clear previous artist selection & albums
     setSelectedArtist(null);
     setAlbums([]);
     setAlbumsError(null);
-
     setLoading(true);
     setError(null);
 
@@ -81,7 +72,6 @@ export function Music() {
       const results = await searchArtists(query);
       setArtists(results);
       if (results.length === 0) {
-        // Show popup if no artists found
         setPopupMessage('No artists found');
         setTimeout(() => setPopupMessage(null), 4000);
       }
@@ -92,99 +82,34 @@ export function Music() {
     }
   };
 
-  //Fetch tracks for album
-  const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
-  const fetchTracksForAlbums = async (albums: Album[]) => {
-    setLoadingTracks(true);
-    try {
-      const albumsWithTracks: Album[] = [];
-
-      for (const album of albums) {
-        try {
-          const tracks = await getTracksByAlbum(album.id);
-
-          const totalLength = tracks.reduce((sum, t) => sum + t.lengthMs, 0);
-          const avgLength = tracks.length ? totalLength / tracks.length : 0;
-
-          albumsWithTracks.push({
-            ...album,
-            tracks,
-            averageTrackLengthMs: avgLength,
-          });
-        } catch (err) {
-          console.warn(`Failed to fetch tracks for album ${album.title}`);
-          albumsWithTracks.push({
-            ...album,
-            tracks: [],
-            averageTrackLengthMs: 0,
-          });
-        }
-
-        // wait 1 second before the next request
-        await sleep(1000);
-      }
-
-      setAlbums(albumsWithTracks);
-    } catch (err: any) {
-      setAlbumsError(err.message || 'Failed to fetch tracks');
-    } finally {
-      setLoadingTracks(false);
-    }
-  };
-
+  // Album toggle
   const toggleAlbum = (albumId: string) => {
     setExpandedAlbums((prev) => {
       const newSet = new Set(prev);
-      if (newSet.has(albumId)) {
-        newSet.delete(albumId); // collapse if already expanded
-      } else {
-        newSet.add(albumId); // expand if not expanded
-      }
+      if (newSet.has(albumId)) newSet.delete(albumId);
+      else newSet.add(albumId);
       return newSet;
     });
   };
 
-  const sortedAlbums = [...albums].sort((a, b) => {
-    const aAvg = a.averageTrackLengthMs ?? 0;
-    const bAvg = b.averageTrackLengthMs ?? 0;
-    return albumSortOrder === 'asc' ? aAvg - bAvg : bAvg - aAvg;
-  });
-
-  const avgTrackData = sortedAlbums.map((album) => ({
-    name: album.title,
-    avg: (album.averageTrackLengthMs ?? 0) / 60000,
-  }));
+  const sortedAlbums = sortAlbumsByAvgTrackLength(albums, albumSortOrder);
+  const chartData = albumsToChartData(sortedAlbums);
 
   return (
     <>
       <div className="info-hover" style={{ color: '#82ca9d' }}>
         <div className="info-hover-label">About this page</div>
-
         <div className="info-hover-popup">
           <h4>Music Analytics Dashboard</h4>
-
           <p>
             Search for an artist to view their albums and compare average track
             lengths visually using the bar chart.
           </p>
-
           <p>Click an album to expand and view individual track durations.</p>
-
           <p>
             This page uses data fetched from the public MusicBrainz API. While
             the API provides extensive artist and album information, some data
-            may be incomplete, inconsistent, or community-maintained, which can
-            result in missing release dates, duplicate entries, or inaccurate
-            track lengths.
-          </p>
-
-          <p>
-            The frontend communicates with a backend service layer that handles
-            API requests and data transformation before rendering it in the
-            dashboard. This separation keeps the UI focused on presentation
-            while the backend manages data retrieval and processing.
+            may be incomplete or community-maintained.
           </p>
         </div>
       </div>
@@ -197,11 +122,12 @@ export function Music() {
               <span>
                 {loading
                   ? 'Searching artists...'
-                  : 'Loading albums and tracks... Select an album to expand'}
+                  : 'Loading albums and tracks...'}
               </span>
             </div>
           </div>
         )}
+
         <h1 className="music-title">Music Analytics Dashboard</h1>
 
         {popupMessage && <div className="popup-message">{popupMessage}</div>}
@@ -215,38 +141,34 @@ export function Music() {
             placeholder="Search for an artist..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && query.trim()) {
-                searchArtist();
-              }
-            }}
+            onKeyDown={(e) =>
+              e.key === 'Enter' && query.trim() && searchArtistHandler()
+            }
           />
-          <button className="search-button" onClick={searchArtist}>
+          <button className="search-button" onClick={searchArtistHandler}>
             Search
           </button>
         </div>
 
-        {/* Artist Search Results */}
+        {/* Artist Results */}
         {artists.length > 0 && (
-          <div className="artist-results-container">
-            <ul className="artist-list">
-              {artists.map((artist) => (
-                <li
-                  key={artist.id}
-                  className="artist-item"
-                  onClick={() => handleArtistClick(artist)}
-                >
-                  <strong>{artist.name}</strong>
-                  {artist.country && ` (${artist.country})`}
-                  {artist.disambiguation && ` – ${artist.disambiguation}`}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul className="artist-list">
+            {artists.map((artist) => (
+              <li
+                key={artist.id}
+                className="artist-item"
+                onClick={() => handleArtistClick(artist)}
+              >
+                <strong>{artist.name}</strong>
+                {artist.country && ` (${artist.country})`}
+                {artist.disambiguation && ` – ${artist.disambiguation}`}
+              </li>
+            ))}
+          </ul>
         )}
 
         {/* Chart Section */}
-        {selectedArtist && !albumsLoading && avgTrackData.length > 0 && (
+        {selectedArtist && !albumsLoading && chartData.length > 0 && (
           <>
             <button
               className="sort-button"
@@ -255,17 +177,16 @@ export function Music() {
               }
               disabled={loadingTracks}
             >
-              Sort by Average Track Length (
-              {albumSortOrder === 'asc' ? '↑' : '↓'})
+              Sort by Avg Track Length ({albumSortOrder === 'asc' ? '↑' : '↓'})
             </button>
 
             <div
               className="chart-container"
-              style={{ width: '100%', height: 300, marginBottom: '1rem' }}
+              style={{ width: '100%', height: 300 }}
             >
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
-                  data={avgTrackData}
+                  data={chartData}
                   margin={{ top: 5, right: 20, left: 0, bottom: 50 }}
                 >
                   <CartesianGrid className="chart-grid" />
@@ -277,14 +198,12 @@ export function Music() {
                     height={60}
                     tick={{ fontSize: 12, fill: '#fff' }}
                     tickMargin={50}
-                    label={{ value: '', offset: 0 }}
                   />
                   <YAxis className="chart-axis" />
                   <Tooltip
                     content={({ active, payload, label }) => {
                       if (!active || !payload || payload.length === 0)
                         return null;
-
                       return (
                         <div className="chart-tooltip-wrapper">
                           <div className="tooltip-label">{label}</div>
@@ -312,12 +231,12 @@ export function Music() {
 
             {albums.length > 0 ? (
               <ul className="artist-list">
-                {albums.map((album) => (
+                {sortedAlbums.map((album) => (
                   <li
-                    key={album.id}
                     className="artist-item"
+                    key={album.id}
                     onClick={() => toggleAlbum(album.id)}
-                    style={{ cursor: 'pointer' }}
+                    //style={{ cursor: 'pointer' }}
                   >
                     <strong>{album.title}</strong>
                     {album.releaseDate && ` (${album.releaseDate})`}
@@ -325,8 +244,6 @@ export function Music() {
                       ` – Avg: ${(album.averageTrackLengthMs / 60000).toFixed(
                         2
                       )} min`}
-
-                    {/* Track list, visible only if album is expanded */}
                     {expandedAlbums.has(album.id) &&
                       album.tracks &&
                       album.tracks.length > 0 && (

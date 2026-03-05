@@ -14,7 +14,8 @@
     "paths": {
       "@ra-proj/shared": ["libs/shared/src/index.ts"],
       "@weather": ["libs/shared/src/lib/weather.ts"],
-      "@styles/*": ["react-app/src/app/Styles/*"]
+      "@styles/*": ["react-app/src/app/Styles/*"],
+      "@pagesLib/contact": ["libs/shared/src/lib/contact.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
