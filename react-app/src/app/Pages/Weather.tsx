@@ -15,7 +15,7 @@ export function Weather() {
 
     if (!city) {
       setError(null); // reset first
-      setTimeout(() => setError('Please enter a city'), 0); // then set again
+      setTimeout(() => setError('Please enter a city'), 0);
       setWeatherData(null);
       return;
     }
@@ -28,7 +28,7 @@ export function Weather() {
     } catch (err: any) {
       setWeatherData(null);
       setError(null); // reset first
-      setTimeout(() => setError(err.message), 50); // show GET error popup
+      setTimeout(() => setError(err.message), 50);
       console.error(err.message);
     } finally {
       setLoading(false); // stop loading

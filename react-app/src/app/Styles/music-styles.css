@@ -2,7 +2,7 @@
   padding: 2rem;
   max-width: 1100px;
   margin: 0 auto;
-  position: relative; /* required so overlay is positioned correctly */
+  position: relative;
 }
 
 .music-title {
@@ -25,6 +25,7 @@
   border-radius: 6px;
   transition: border 0.2s ease;
   background-color: #1e1e1e;
+  color: #fffdfd;
 }
 
 .search-input:focus {
@@ -75,57 +76,6 @@
   cursor: pointer;
 }
 
-/* Overlay */
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  pointer-events: all;
-}
-
-/* Message + spinner container */
-.loading-message {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  background-color: #222;
-  color: #fff;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 1.2rem;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-  gap: 1rem;
-}
-
-/* Spinner */
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 6px solid rgba(255, 255, 255, 0.2); /* light border for background */
-  border-top-color: #fff; /* white segment for rotation */
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  display: block; /* ensures it shows */
-}
-
-/* Spinner rotation */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 .artist-item {
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
@@ -142,9 +92,9 @@
 
 /* Sort button styling */
 .sort-button {
-  background-color: #1f1f1f; /* dark background to match music container */
-  color: #fff; /* white text for contrast */
-  border: 1px solid #82ca9d; /* match chart color for accent */
+  background-color: #1f1f1f;
+  color: #fff;
+  border: 1px solid #82ca9d;
   border-radius: 6px;
   padding: 0.5rem 1rem;
   margin-bottom: 1rem;
@@ -165,7 +115,6 @@
 }
 
 /* Chart container */
-/* Chart container */
 .chart-container {
   width: 100%;
   height: 300px;
@@ -173,14 +122,14 @@
   border: 2px solid #82ca9d;
   border-radius: 12px;
   padding: 10px;
-  background-color: #1f1f1f; /* dark chart background */
+  background-color: #1f1f1f;
 }
 
 /* Bars */
 .chart-bar {
   fill: #82ca9d;
   rx: 6px;
-  ry: 6px; /* rounded top corners */
+  ry: 6px;
 }
 
 /* Grid lines */
@@ -194,18 +143,18 @@
 .chart-axis text {
   fill: #fff;
   font-size: 12px;
-  text-anchor: end; /* keeps rotation aligned */
-  dominant-baseline: hanging; /* anchor to top of rotated text */
-  transform: rotate(-45deg); /* keep rotation */
+  text-anchor: end;
+  dominant-baseline: hanging;
+  transform: rotate(-45deg);
   line-height: 1.2;
-  white-space: pre-wrap; /* allows wrapping */
-  word-break: break-word; /* wrap long names */
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
-/* Tooltip wrapper (your custom content) */
+/* Tooltip wrapper */
 .chart-tooltip-wrapper {
-  background-color: #333; /* dark background */
-  color: #fff; /* text color */
+  background-color: #333;
+  color: #fff;
   border-radius: 6px;
   padding: 10px 14px;
   font-size: 0.9rem;
@@ -214,7 +163,7 @@
   line-height: 1.5;
   min-width: 140px;
   max-width: 220px;
-  white-space: normal; /* allow text wrapping */
+  white-space: normal;
 }
 
 /* Tooltip album name */
@@ -230,7 +179,7 @@
   color: #fff;
 }
 
-/* Hover cursor rectangle */
+/* Hover cursor */
 .chart-cursor {
   fill: rgba(130, 202, 157, 0.2);
   stroke: #82ca9d;
@@ -240,17 +189,17 @@
 }
 
 .popup-message {
-  position: absolute; /* or fixed, depending on layout */
+  position: absolute;
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #f8d7da; /* light red */
-  color: #721c24; /* dark red text */
+  background-color: #f8d7da;
+  color: #721c24;
   padding: 8px 16px;
   border: 1px solid #f5c6cb;
   border-radius: 4px;
   z-index: 1000;
-  animation: fadeOut 4s forwards; /* optional */
+  animation: fadeOut 4s forwards;
 }
 
 @keyframes fadeOut {
@@ -265,7 +214,7 @@
   }
 }
 
-/* Hide outline when clicked by mouse, but keep it for keyboard navigation */
+/* Hide outline when clicked by mouse */
 .recharts-wrapper *:focus:not(:focus-visible) {
   outline: none;
 }
@@ -289,7 +238,7 @@
 
 .music-info-wrapper {
   position: fixed;
-  top: 70px; /* adjust for navbar height */
+  top: 70px;
   left: 20px;
   z-index: 1000;
 }

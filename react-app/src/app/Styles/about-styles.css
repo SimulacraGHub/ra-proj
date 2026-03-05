@@ -6,17 +6,17 @@
   box-sizing: border-box;
 }
 .about-container ul {
-  text-align: left; /* align bullet text properly */
-  padding-left: 1.2rem; /* space between bullet and left edge */
+  text-align: left;
+  padding-left: 1.2rem;
   margin: 1rem 0;
 }
 
 .about-container li {
-  margin-bottom: 0.5rem; /* space between items */
+  margin-bottom: 0.5rem;
   line-height: 1.6;
 }
 
 .about-container li::marker {
-  color: #bb86fc; /* optional: match theme color */
-  font-size: 1rem; /* optional: nice size */
+  color: #bb86fc;
+  font-size: 1rem;
 }

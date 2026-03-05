@@ -7,9 +7,9 @@ body {
   padding: 0;
   min-height: 100vh;
   display: flex;
-  justify-content: center; /* horizontal center for root container */
-  align-items: center; /* vertical center for root container */
-  color: #e0e0e0; /* text color */
+  justify-content: center;
+  align-items: center;
+  color: #e0e0e0;
 }
 
 a {
@@ -20,27 +20,27 @@ a:hover {
   color: #ffffff;
 }
 
-/* Make root fill viewport */
+/* root fills viewport */
 html,
 body,
 #root {
   margin: 0;
   padding: 0;
-  height: 100vh; /* full viewport height */
-  width: 100%; /* full viewport width */
+  height: 100vh;
+  width: 100%;
   display: flex;
-  flex-direction: column; /* stack nav + content vertically */
-  background-color: #121212; /* dark background */
+  flex-direction: column;
+  background-color: #121212;
   color: #e0e0e0;
   font-family: Arial, sans-serif;
 }
 
 #root > div > div {
-  flex: 1; /* fill remaining space */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* vertical center */
-  align-items: center; /* horizontal center */
+  justify-content: center;
+  align-items: center;
   text-align: center;
   gap: 1rem;
 }
@@ -53,21 +53,20 @@ body,
   box-sizing: border-box;
 }
 
-/* bullet alignment in your existing container */
 .home-container ul {
-  text-align: left; /* align bullet text properly */
-  padding-left: 1.2rem; /* space between bullet and left edge */
+  text-align: left;
+  padding-left: 1.2rem;
   margin: 1rem 0;
 }
 
 .home-container li {
-  margin-bottom: 0.5rem; /* space between items */
+  margin-bottom: 0.5rem;
   line-height: 1.6;
 }
 
 .home-container li::marker {
-  color: #bb86fc; /* optional: match theme color */
-  font-size: 1rem; /* optional: nice size */
+  color: #bb86fc;
+  font-size: 1rem;
 }
 
 /* nav bar container */
@@ -78,7 +77,7 @@ body,
   gap: 1rem;
   padding: 1rem;
   position: relative;
-  background-color: #1e1e1e; /* dark header */
+  background-color: #1e1e1e;
 }
 
 /* nav links */
@@ -167,11 +166,11 @@ body,
 .spinner {
   width: 50px;
   height: 50px;
-  border: 6px solid rgba(255, 255, 255, 0.2); /* light border for background */
-  border-top-color: #fff; /* white segment for rotation */
+  border: 6px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #fff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  display: block; /* ensures it shows */
+  display: block;
 }
 
 /* Spinner rotation */

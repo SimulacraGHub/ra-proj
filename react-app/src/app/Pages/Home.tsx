@@ -10,12 +10,6 @@ export function Home() {
           React, Node.js, and shared libraries.
         </p>
         <p>Explore the dashboards using the navigation bar at the top right.</p>
-
-        {/* <img
-        src="/images/bgroundMain.jpg" // path to your image
-        alt="Theme"
-        className="home-image"
-      /> */}
       </div>
     </div>
   );

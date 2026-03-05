@@ -13,27 +13,9 @@ import { searchArtists } from '../services/musicService';
 import { Artist, Album } from '../types/musicTypes';
 import { getAlbumsByArtist } from '../services/musicService';
 import { getTracksByAlbum } from '../services/musicService';
-//import { Rectangle } from 'recharts';
-
-// const CustomCursor = (props: any) => {
-//   const { x, y, width, height } = props;
-//   return (
-//     <Rectangle
-//       x={x}
-//       y={y}
-//       width={width}
-//       height={height}
-//       fill="rgba(130, 202, 157, 0.2)" // light green hover
-//       stroke="#82ca9d" // border color
-//       strokeWidth={2}
-//       rx={6} // rounded corners
-//       ry={6}
-//     />
-//   );
-// };
 
 export function Music() {
-  //old popup when input is empty
+  //popup when input is empty
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
   //Initial search
@@ -68,16 +50,16 @@ export function Music() {
     try {
       const artistAlbums = await getAlbumsByArtist(artist.id);
       setAlbums(artistAlbums);
-      await fetchTracksForAlbums(artistAlbums); // <-- fetch tracks and calculate average
+      await fetchTracksForAlbums(artistAlbums); // fetch tracks and calculate average
     } catch (err: any) {
       setAlbumsError(err.message || 'Failed to load albums');
     } finally {
       setAlbumsLoading(false);
     }
   };
-  /////////////
+
   const searchArtist = async () => {
-    //old custom popup
+    //custom popup
     if (!query.trim()) {
       // Show popup
       setPopupMessage('Please enter an artist name');
@@ -289,16 +271,13 @@ export function Music() {
                   <CartesianGrid className="chart-grid" />
                   <XAxis
                     dataKey="name"
-                    angle={-80} // rotate labels
-                    textAnchor="end" // rotation alignment
-                    interval={0} // show all labels
-                    height={60} // total space for labels
+                    angle={-80}
+                    textAnchor="end"
+                    interval={0}
+                    height={60}
                     tick={{ fontSize: 12, fill: '#fff' }}
-                    tickMargin={50} // moves labels down into empty space
-                    label={{ value: '', offset: 0 }} // prevents extra chart space usage
-                    //   tickFormatter={(value) =>          //truncation
-                    //     value.length > 12 ? value.slice(0, 12) + '…' : value
-                    //   }
+                    tickMargin={50}
+                    label={{ value: '', offset: 0 }}
                   />
                   <YAxis className="chart-axis" />
                   <Tooltip
@@ -338,7 +317,7 @@ export function Music() {
                     key={album.id}
                     className="artist-item"
                     onClick={() => toggleAlbum(album.id)}
-                    style={{ cursor: 'pointer' }} // pointer for whole item
+                    style={{ cursor: 'pointer' }}
                   >
                     <strong>{album.title}</strong>
                     {album.releaseDate && ` (${album.releaseDate})`}
