@@ -97,7 +97,23 @@ export function Music() {
   };
 
   const sortedAlbums = sortAlbums(albums, albumSortField, albumSortOrder);
-  const chartData = albumsToChartData(sortedAlbums);
+  const chartData = albumsToChartData(sortedAlbums, albumSortField);
+
+  let yMin = 0;
+  let yMax = 0;
+
+  if (albumSortField === 'releaseDate') {
+    const years = chartData.map((d) => d.avg); // avg is year, update this to value
+    const minYear = Math.min(...years);
+    const maxYear = Math.max(...years);
+    yMin = minYear - 1; // 1 year before earliest
+    yMax = maxYear + 1; // 1 year after latest
+  }
+  // Determine Y-axis label
+  // const yAxisLabel =
+  //   albumSortField === 'avgTrackLength'
+  //     ? 'Avg Track Length (min)'
+  //     : 'Release Year';
 
   return (
     <>
@@ -111,9 +127,13 @@ export function Music() {
           </p>
           <p>Click an album to expand and view individual track durations.</p>
           <p>
-            This page uses data fetched from the public MusicBrainz API. While
-            the API provides extensive artist and album information, some data
-            may be incomplete or community-maintained.
+            This page integrates with the Spotify Web API to retrieve artist,
+            album, and track data in real time. The application processes this
+            data through a custom backend service and visualizes album
+            statistics, such as average track length, using an interactive
+            chart. While Spotify provides extensive music metadata, some details
+            such as release dates, album classifications, or market availability
+            may vary depending on Spotify’s catalog data.
           </p>
         </div>
       </div>
@@ -211,7 +231,7 @@ export function Music() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={chartData}
-                  margin={{ top: 5, right: 20, left: 0, bottom: 50 }}
+                  margin={{ top: 5, right: 20, left: 20, bottom: 50 }}
                 >
                   <CartesianGrid className="chart-grid" />
                   <XAxis
@@ -219,11 +239,31 @@ export function Music() {
                     angle={-80}
                     textAnchor="end"
                     interval={0}
-                    height={60}
+                    height={80}
                     tick={{ fontSize: 12, fill: '#fff' }}
                     tickMargin={50}
+                    tickFormatter={(name) =>
+                      name.length > 15 ? name.slice(0, 15) + '…' : name
+                    }
                   />
-                  <YAxis className="chart-axis" />
+                  <YAxis
+                    className="chart-axis"
+                    label={{
+                      value:
+                        albumSortField === 'avgTrackLength'
+                          ? 'Avg Track Length (min)'
+                          : 'Release Year',
+                      angle: -90,
+                      position: 'insideLeft',
+                      offset: -15,
+                      fill: '#fff',
+                    }}
+                    domain={
+                      albumSortField === 'releaseDate'
+                        ? [yMin, yMax]
+                        : undefined
+                    }
+                  />
                   <Tooltip
                     content={({ active, payload, label }) => {
                       if (!active || !payload || payload.length === 0)
@@ -232,7 +272,10 @@ export function Music() {
                         <div className="chart-tooltip-wrapper">
                           <div className="tooltip-label">{label}</div>
                           <div className="tooltip-value">
-                            {payload[0].value.toFixed(2)} min
+                            {albumSortField === 'avgTrackLength'
+                              ? `${payload[0].value.toFixed(2)} min`
+                              : chartData.find((d) => d.name === label)
+                                  ?.label || ''}
                           </div>
                         </div>
                       );

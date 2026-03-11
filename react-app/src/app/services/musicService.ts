@@ -1,4 +1,3 @@
-// react-app/src/app/services/musicService.ts
 import { Artist, Album, Track } from '../types/musicTypes';
 
 // fetch from backend; backend handles Spotify
@@ -58,11 +57,26 @@ export function sortAlbumsByAvgTrackLength(
   });
 }
 
-export function albumsToChartData(albums: Album[]) {
-  return albums.map((album) => ({
-    name: album.title,
-    avg: (album.averageTrackLengthMs ?? 0) / 60000,
-  }));
+export function albumsToChartData(
+  albums: Album[],
+  field: 'avgTrackLength' | 'releaseDate'
+) {
+  return albums.map((album) => {
+    if (field === 'avgTrackLength') {
+      return {
+        name: album.title,
+        avg: album.averageTrackLengthMs
+          ? +(album.averageTrackLengthMs / 60000).toFixed(2) // convert ms to min
+          : 0,
+      };
+    } else {
+      return {
+        name: album.title,
+        avg: album.releaseDate ? parseInt(album.releaseDate.slice(0, 4)) : 0, // Year only
+        label: album.releaseDate || '', // keep original date for tooltip
+      };
+    }
+  });
 }
 
 export function sortAlbums(

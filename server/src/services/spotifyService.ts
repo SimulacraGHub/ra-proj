@@ -1,12 +1,9 @@
-// server/services/spotifyService.ts
-//import fetch from 'node-fetch';
 import { Artist, Album, Track } from '../types/musicTypes';
 
 const BASE_URL = 'https://api.spotify.com/v1';
 
 let cachedToken: { token: string; expiresAt: number } | null = null;
 
-// Get access token using Client Credentials Flow
 async function getAccessToken(): Promise<string> {
   const now = Date.now();
   if (cachedToken && cachedToken.expiresAt > now) {
@@ -64,7 +61,7 @@ export async function searchArtists(query: string): Promise<Artist[]> {
   }));
 }
 
-// Get all studio albums for an artist in the US, filter live and remasters
+// Get all studio albums for an artist in the US, filter out live and remasters
 export async function getArtistAlbums(artistId: string): Promise<Album[]> {
   if (!artistId) throw new Error('Missing artistId parameter');
 
