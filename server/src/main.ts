@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { Resend } from 'resend';
+import spotifyRoutes from './routes/spotifyRoutes';
 
 const app = express();
 
@@ -41,6 +42,8 @@ app.post('/api/contact', async (req: Request, res: Response) => {
     return res.status(500).json({ success: false, error: error.message });
   }
 });
+
+app.use('/api/spotify', spotifyRoutes);
 
 app.listen(3000, () => {
   console.log('Server running on http://localhost:3000');
