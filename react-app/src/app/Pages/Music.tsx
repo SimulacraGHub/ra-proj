@@ -14,7 +14,8 @@ import {
   searchArtists,
   getAlbumsByArtist,
   fetchTracksForAlbums,
-  sortAlbumsByAvgTrackLength,
+  //sortAlbumsByAvgTrackLength,
+  sortAlbums,
   albumsToChartData,
 } from '../services/musicService';
 
@@ -33,6 +34,9 @@ export function Music() {
 
   const [loadingTracks, setLoadingTracks] = useState(false);
   const [expandedAlbums, setExpandedAlbums] = useState<Set<string>>(new Set());
+  const [albumSortField, setAlbumSortField] = useState<
+    'avgTrackLength' | 'releaseDate'
+  >('avgTrackLength');
   const [albumSortOrder, setAlbumSortOrder] = useState<'asc' | 'desc'>('asc');
 
   // Artist search
@@ -92,7 +96,7 @@ export function Music() {
     });
   };
 
-  const sortedAlbums = sortAlbumsByAvgTrackLength(albums, albumSortOrder);
+  const sortedAlbums = sortAlbums(albums, albumSortField, albumSortOrder);
   const chartData = albumsToChartData(sortedAlbums);
 
   return (
@@ -170,7 +174,7 @@ export function Music() {
         {/* Chart Section */}
         {selectedArtist && !albumsLoading && chartData.length > 0 && (
           <>
-            <button
+            {/* <button
               className="sort-button"
               onClick={() =>
                 setAlbumSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
@@ -178,7 +182,27 @@ export function Music() {
               disabled={loadingTracks}
             >
               Sort by Avg Track Length ({albumSortOrder === 'asc' ? '↑' : '↓'})
-            </button>
+            </button> */}
+            <div className="sort-controls">
+              <select
+                value={albumSortField}
+                onChange={(e) => setAlbumSortField(e.target.value as any)}
+                disabled={loadingTracks}
+              >
+                <option value="avgTrackLength">Average Track Length</option>
+                <option value="releaseDate">Release Date</option>
+              </select>
+
+              <button
+                className="sort-button"
+                onClick={() =>
+                  setAlbumSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
+                }
+                disabled={loadingTracks}
+              >
+                {albumSortOrder === 'asc' ? '↑ Ascending' : '↓ Descending'}
+              </button>
+            </div>
 
             <div
               className="chart-container"

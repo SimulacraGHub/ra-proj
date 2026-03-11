@@ -64,3 +64,26 @@ export function albumsToChartData(albums: Album[]) {
     avg: (album.averageTrackLengthMs ?? 0) / 60000,
   }));
 }
+
+export function sortAlbums(
+  albums: Album[],
+  field: 'avgTrackLength' | 'releaseDate',
+  order: 'asc' | 'desc'
+): Album[] {
+  return [...albums].sort((a, b) => {
+    let aValue: number | string = 0;
+    let bValue: number | string = 0;
+
+    if (field === 'avgTrackLength') {
+      aValue = a.averageTrackLengthMs ?? 0;
+      bValue = b.averageTrackLengthMs ?? 0;
+    } else if (field === 'releaseDate') {
+      aValue = a.releaseDate ?? '';
+      bValue = b.releaseDate ?? '';
+    }
+
+    if (aValue < bValue) return order === 'asc' ? -1 : 1;
+    if (aValue > bValue) return order === 'asc' ? 1 : -1;
+    return 0;
+  });
+}

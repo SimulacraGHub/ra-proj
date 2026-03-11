@@ -97,7 +97,7 @@
   border: 1px solid #82ca9d;
   border-radius: 6px;
   padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -110,6 +110,39 @@
 }
 
 .sort-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* space between dropdown and button */
+  margin-bottom: 1rem;
+  flex-wrap: wrap; /* wraps on small screens */
+}
+
+/* Style the dropdown to match the sort button */
+.sort-controls select {
+  background-color: #1f1f1f;
+  color: #fff;
+  border: 1px solid #82ca9d;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover effect for dropdown */
+.sort-controls select:hover {
+  background-color: #82ca9d;
+  color: #1f1f1f;
+  border-color: #82ca9d;
+}
+
+/* Disabled state for dropdown */
+.sort-controls select:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
