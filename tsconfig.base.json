@@ -16,7 +16,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "baseUrl": ".",                      
+    "baseUrl": ".",
     "paths": {
       "@ra-proj/shared": ["libs/shared/src/index.ts"],
       "@weather": ["libs/shared/src/lib/weather.ts"],

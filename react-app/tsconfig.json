@@ -18,7 +18,7 @@
       "@pagesLib/contact": ["libs/shared/src/lib/contact.ts"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vite-env.d.ts"],
   "references": [
     {
       "path": "./tsconfig.app.json"

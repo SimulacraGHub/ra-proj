@@ -1,3 +1,5 @@
+///This file is not currently in use
+
 import { Artist, Album, Track } from '../types/musicTypes';
 
 // fetch from backend; backend handles Spotify

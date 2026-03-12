@@ -1,3 +1,5 @@
+import 'dotenv/config';
+import path from 'path';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { Resend } from 'resend';
@@ -6,7 +8,7 @@ import spotifyRoutes from './routes/spotifyRoutes';
 const app = express();
 
 // Allow frontend requests
-app.use(cors({ origin: 'http://localhost:4200' }));
+app.use(cors({ origin: process.env.FRONTEND_URL }));
 app.use(express.json());
 
 // Initialize Resend with API key from .env
@@ -45,6 +47,13 @@ app.post('/api/contact', async (req: Request, res: Response) => {
 
 app.use('/api/spotify', spotifyRoutes);
 
-app.listen(3000, () => {
-  console.log('Server running on http://localhost:3000');
+app.use(express.static(path.join(__dirname, '../../react-app/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../react-app/dist/index.html'));
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

@@ -49,5 +49,15 @@ test-output
 
 # environment variables
 .env
-.env.*
-!.env.example
+.env.local
+.env.*.local
+.env.*.production
+.env.production
+
+# Server environment variables
+server/.env
+server/.env.*
+
+# React app environment variables
+react-app/.env
+react-app/.env.*
