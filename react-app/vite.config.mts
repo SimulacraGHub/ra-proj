@@ -5,7 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 
 export default defineConfig(() => ({
-  root: import.meta.dirname,
+  root: '.',
   cacheDir: '../node_modules/.vite/react-app',
   server: {
     port: 4200,
@@ -30,7 +30,7 @@ export default defineConfig(() => ({
   //
   resolve: {
     alias: {
-      '@styles': path.resolve(__dirname, 'src/app/styles'), // new alias for styles
+      '@styles': path.resolve(process.cwd(), 'src/app/styles'), // new alias for styles, absolute relative for deployment
     },
   },
 
