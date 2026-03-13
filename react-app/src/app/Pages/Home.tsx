@@ -1,5 +1,5 @@
-//import '@styles/home-styles.css'; // Need to setup config to read paths correctly after deployment
-import '../styles/home-styles.css';
+import '@styles/home-styles.css';
+//import '../styles/home-styles.css';
 
 export function Home() {
   return (
