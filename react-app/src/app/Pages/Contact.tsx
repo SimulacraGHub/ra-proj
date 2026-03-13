@@ -1,5 +1,5 @@
 import '@styles/contact-styles.css';
-import { useContactForm } from '@pagesLib/contact';
+import { useContactForm } from '../hooks/useContactForm';
 
 export function Contact() {
   const { formData, status, handleChange, handleSubmit } = useContactForm();
