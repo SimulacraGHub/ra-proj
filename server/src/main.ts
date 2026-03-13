@@ -47,10 +47,16 @@ app.post('/api/contact', async (req: Request, res: Response) => {
 
 app.use('/api/spotify', spotifyRoutes);
 
-app.use(express.static(path.join(__dirname, '../../react-app/dist')));
+// __dirname is server/dist/server after build
+// React build is in raProj/react-app/dist
+const reactBuildPath = path.join(__dirname, '../../../../react-app/dist');
+
+console.log('Serving React from:', reactBuildPath);
+
+app.use(express.static(reactBuildPath));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../react-app/dist/index.html'));
+  res.sendFile(path.join(reactBuildPath, 'index.html'));
 });
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
