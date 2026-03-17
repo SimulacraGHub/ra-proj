@@ -4,9 +4,9 @@ WORKDIR /app
 
 # Copy only workspace files needed for building the apps
 COPY package*.json nx.json ./
-COPY apps/server ./apps/server
-COPY apps/react-app ./apps/react-app
-COPY libs/shared ./libs/shared
+COPY server ./server
+COPY react-app ./react-app
+COPY libs ./libs
 
 # Install dependencies needed to build backend + frontend
 RUN npm ci
@@ -20,13 +20,13 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy backend build
-COPY --from=builder /app/apps/server/dist ./server
+COPY --from=builder /app/server/dist ./server
 
 # Copy frontend build to backend folder where it will be served
-COPY --from=builder /app/apps/react-app/dist ./server/react-app/dist
+COPY --from=builder /app/react-app/dist ./server/react-app/dist
 
 # Copy only backend package files
-COPY apps/server/package*.json ./
+COPY server/package*.json ./
 
 # Install only production dependencies
 RUN npm ci --omit=dev
