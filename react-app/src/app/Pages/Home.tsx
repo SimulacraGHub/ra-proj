@@ -8,9 +8,12 @@ export function Home() {
         <h2>Welcome to my Home Page</h2>
         <p>
           This is my personal web app showcasing full-stack projects built with
-          React, Node.js, and shared libraries.
+          React and a Node.js backend using Express.
         </p>
-        <p>Explore the dashboards using the navigation bar at the top right.</p>
+        <p>
+          Explore interactive dashboards including a Music library, Weather
+          updates, and more through the navigation bar at the top right.
+        </p>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ export function About() {
       <ul>
         <li>
           A <strong>Music Analytics Dashboard</strong> that consumes data from
-          the <strong>MusicBrainz API</strong>, processes album and track data
+          the <strong>Spotify API</strong>, processes album and track data
           through a backend service layer, and visualizes insights using{' '}
           <strong>Recharts</strong>.
         </li>
@@ -52,12 +52,14 @@ export function About() {
         This application demonstrates clean separation of concerns: the frontend
         focuses on presentation and user interaction, while the backend manages
         API communication, data validation, and external service integrations.
-      </p>
-
-      <p>
-        It also highlights practical considerations when working with
-        third-party APIs, including rate limits, incomplete datasets, and
-        external service reliability.
+        The application is deployed with a production-ready backend and
+        frontend, demonstrating CI/CD considerations, environment configuration,
+        and secure API key handling. Interactive elements such as responsive
+        charts, dropdown menus, and dynamically updated dashboards enhance the
+        user experience while maintaining a consistent design language. It also
+        highlights practical considerations when working with third-party APIs,
+        including rate limits, incomplete datasets, and external service
+        reliability.
       </p>
 
       <p>

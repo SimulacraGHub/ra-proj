@@ -226,3 +226,13 @@ body,
   opacity: 1;
   pointer-events: auto;
 }
+
+.contact-form input:-webkit-autofill,
+.contact-form textarea:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+
+  /* paint over Chrome’s forced background */
+  -webkit-box-shadow: 0 0 0 1000px #1e1e1e inset !important;
+  box-shadow: 0 0 0 1000px #1e1e1e inset !important;
+}
