@@ -2,16 +2,15 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Disable Nx Cloud for all builds inside Docker
-ENV NX_SKIP_NX_CLOUD=true
+# Copy root-level config files first
+COPY package*.json nx.json tsconfig.base.json ./
 
-# Copy only workspace files needed for building the apps
-COPY package*.json nx.json ./
+# Copy apps and libs
 COPY server ./server
 COPY react-app ./react-app
 COPY libs ./libs
 
-# Install all dependencies for building backend + frontend
+# Install dependencies
 RUN npm ci
 
 # Build frontend and backend
