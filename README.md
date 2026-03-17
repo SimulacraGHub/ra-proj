@@ -34,24 +34,29 @@ This repository is a full-stack portfolio demonstration project built using Nx m
 
 **Steps to run everything locally (single flow):**
 
-```bash
 # Clone the repository
+
 git clone https://github.com/SimulacraGHub/ra-proj.git
 cd ra-proj
 
 # Install all dependencies
+
 npm install
 
 # Build the backend
+
 npx nx build server
 
 # Build the frontend
+
 npx nx build react-app
 
 # Serve the backend
+
 npx nx serve server
 
 # Serve the frontend
+
 npx nx serve react-app
 
 ## Environment Variables
@@ -75,4 +80,3 @@ This project demonstrates understanding of modern full-stack and frontend toolin
 ## Author
 
 **Ruan K**, Junior Full-Stack Developer
-```
