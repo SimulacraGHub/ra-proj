@@ -67,11 +67,14 @@ Open your browser at http://localhost:4200. During development, you can also run
 ## Environment Variables
 
 Create a `.env` file in the root of the workspace with the following keys (replace with your real API keys):
+
+```env
 RESEND_API_KEY=your_real_resend_api_key
 OPENWEATHER_API_KEY=your_openweather_api_key
 SPOTIFY_CLIENT_ID=your_spotify_client_id
 SPOTIFY_CLIENT_SECRET=your_spotify_secret
 FRONTEND_URL=http://localhost:4200
+```
 
 ## Purpose
 
