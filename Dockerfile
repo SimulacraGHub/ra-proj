@@ -2,21 +2,21 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
+# Disable Nx Cloud for all builds inside Docker
+ENV NX_SKIP_NX_CLOUD=true
+
 # Copy only workspace files needed for building the apps
 COPY package*.json nx.json ./
 COPY server ./server
 COPY react-app ./react-app
 COPY libs ./libs
 
-# Install dependencies needed to build backend + frontend
+# Install all dependencies for building backend + frontend
 RUN npm ci
 
-# Disable Nx Cloud inside Docker
-ENV NX_SKIP_NX_CLOUD=true
-
-# Build frontend and backend locally
-RUN npx nx build react-app --skip-nx-cloud
-RUN npx nx build server --skip-nx-cloud
+# Build frontend and backend
+RUN npx nx build react-app
+RUN npx nx build server
 
 # ===== Stage 2: Production image =====
 FROM node:20-alpine
