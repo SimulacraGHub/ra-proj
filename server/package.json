@@ -104,6 +104,7 @@
     }
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "dotenv": "^16.1.0"
   }
 }
