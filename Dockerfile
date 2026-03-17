@@ -24,14 +24,14 @@ WORKDIR /app
 # Copy backend build
 COPY --from=builder /app/server/dist ./server
 
-# Copy frontend build to backend folder where it will be served
+# Copy frontend build
 COPY --from=builder /app/react-app/dist ./server/react-app/dist
 
 # Copy only backend package files
 COPY server/package*.json ./
 
 # Install only production dependencies
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 
 # Expose port
 EXPOSE 3000
