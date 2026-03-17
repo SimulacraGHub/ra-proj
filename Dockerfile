@@ -11,9 +11,12 @@ COPY libs ./libs
 # Install dependencies needed to build backend + frontend
 RUN npm ci
 
-# Build frontend and backend
-RUN npx nx build react-app
-RUN npx nx build server
+# Disable Nx Cloud inside Docker
+ENV NX_SKIP_NX_CLOUD=true
+
+# Build frontend and backend locally
+RUN npx nx build react-app --skip-nx-cloud
+RUN npx nx build server --skip-nx-cloud
 
 # ===== Stage 2: Production image =====
 FROM node:20-alpine
