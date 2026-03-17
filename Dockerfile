@@ -2,6 +2,9 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
+# Set VITE_API_URL for frontend build
+ENV VITE_API_URL=https://ra-proj-docker.onrender.com
+
 # Copy root-level config files first
 COPY package*.json nx.json tsconfig.base.json ./
 
