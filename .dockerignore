@@ -1,54 +1,47 @@
-# =====================================================
-# Ignore local dependency folders
-# (only want Docker to install deps inside the image)
+# =================== Node modules ===================
 node_modules
 **/node_modules
 
-# =====================================================
-# Nx & build outputs that don't need to be in the build context
+# =================== Nx & build outputs ===================
 dist
 **/dist
-
-# Vite / frontend build outputs
-react-app/dist
-**/react-app/dist
-
-# Nx cache
+tmp
 .nx
 nx/cache
 
-# =====================================================
-# Logs
+# =================== Frontend build outputs ===================
+apps/react-app/dist
+
+# =================== Logs ===================
 *.log
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
 
-# =====================================================
-# Operating System / Editor folders
+# =================== OS / Editor ===================
 .DS_Store
 Thumbs.db
 .vscode
 .idea
 
-# =====================================================
-# Git
+# =================== Git ===================
 .git
 .gitignore
 
-# =====================================================
-# Dockerfiles and ignore
+# =================== Docker ===================
 docker-compose.yml
 .dockerignore
 Dockerfile
 
-# =====================================================
-# Environment files (you'll pass real secrets at runtime)
+# =================== Environment ===================
 .env
 .env.*
 !.env.example
 
-# =====================================================
-# Optional test/coverage folders
+# =================== Tests / optional folders ===================
 coverage
 test-results
+apps/*/e2e
+apps/*/storybook
+libs/*/tests
+libs/*/storybook
