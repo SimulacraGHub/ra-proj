@@ -10,8 +10,8 @@ COPY server ./server
 COPY react-app ./react-app
 COPY libs ./libs
 
-# Install dependencies
-RUN npm ci
+# Fix lockfile mismatch inside the container, then install dependencies
+RUN npm install --package-lock-only && npm ci
 
 # Build frontend and backend
 RUN npx nx build react-app
@@ -28,10 +28,10 @@ COPY --from=builder /app/server/dist ./server
 COPY --from=builder /app/react-app/dist ./server/react-app/dist
 
 # Copy only backend package files
-COPY server/package*.json ./
+COPY server/package*.json ./server/
 
 # Install only production dependencies
-RUN npm install --omit=dev
+RUN cd server && npm install --omit=dev
 
 # Expose port
 EXPOSE 3000
