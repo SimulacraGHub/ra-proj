@@ -2,7 +2,7 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Set VITE_API_URL for frontend build
+# Set VITE_API_URL for frontend build on railway
 ENV VITE_API_URL=https://ra-proj-production.up.railway.app
 
 # Copy root-level config files first
@@ -39,5 +39,5 @@ COPY --from=builder /app/react-app/dist ./server/react-app/dist
 # Expose port
 EXPOSE 3000
 
-# Start backend server
+# Start backend server 
 CMD ["node", "server/dist/main.js"]
