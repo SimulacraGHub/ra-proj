@@ -24,17 +24,17 @@ RUN npx nx build server
 FROM node:20-alpine
 WORKDIR /app
 
-# Copy backend build
-COPY --from=builder /app/server/dist ./server
-
-# Copy frontend build
-COPY --from=builder /app/react-app/dist ./server/react-app/dist
-
-# Copy only backend package files
+# Copy only backend package files first
 COPY server/package*.json ./server/
 
 # Install only production dependencies
 RUN cd server && npm install --omit=dev
+
+# Copy backend build AFTER dependencies
+COPY --from=builder /app/server/dist ./server
+
+# Copy frontend build
+COPY --from=builder /app/react-app/dist ./server/react-app/dist
 
 # Expose port
 EXPOSE 3000
