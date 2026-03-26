@@ -26,7 +26,7 @@ COPY --from=builder /app/react-app/dist ./react-app/dist
 COPY server/package*.json ./server/
 RUN cd server && npm install --omit=dev
 
-EXPOSE 3000
+EXPOSE 8080
 
 # Start from the root so the relative paths match
 CMD ["node", "server/dist/src/main.js"]
