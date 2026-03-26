@@ -40,4 +40,4 @@ COPY --from=builder /app/react-app/dist ./server/react-app/dist
 EXPOSE 3000
 
 # Start backend server 
-CMD ["node", "server/dist/main.js"]
+CMD ["node", "server/main.js"]
