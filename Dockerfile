@@ -2,38 +2,43 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
+# Set frontend env
 ENV VITE_API_URL=https://ra-proj-production.up.railway.app
 ENV NX_NO_CLOUD=true
 
-# Copy config and source
+# Copy root-level config files
 COPY package*.json nx.json tsconfig.base.json ./
+
+# Copy source code
 COPY server ./server
 COPY react-app ./react-app
 COPY libs ./libs
 
-# Install deps (including devDeps for the build)
+# Install deps
 RUN npm ci
 
 # Build frontend and backend
 RUN npx nx build react-app
 RUN npx nx build server
 
+RUN ls -R /app/dist
+
 # ===== Stage 2: Production =====
 FROM node:20-alpine
 WORKDIR /app
 
-# Copy production dependencies for the server
+# Copy backend package files and install production deps
 COPY server/package*.json ./
 RUN npm install --omit=dev
 
-# 1. Copy backend build 
-COPY --from=builder /app/dist/server ./
+# 1. Copy backend build
+COPY --from=builder /app/dist/apps/server/. ./
 
-# 2. Copy frontend build into a subfolder the server can serve
-COPY --from=builder /app/dist/react-app ./react-app-dist
+# 2. Copy frontend build
+COPY --from=builder /app/dist/apps/react-app ./public
 
 # Expose port
 EXPOSE 3000
 
-# Start server from the root of /app since we copied content into ./
+# Start server
 CMD ["node", "main.js"]
