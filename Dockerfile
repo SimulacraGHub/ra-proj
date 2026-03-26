@@ -5,16 +5,18 @@ WORKDIR /app
 ENV VITE_API_URL=https://ra-proj-production.up.railway.app
 ENV NX_NO_CLOUD=true
 
-# Copy configs and source
+# Copy root configs
 COPY package*.json nx.json tsconfig.base.json ./
+
+# Copy source code
 COPY server ./server
 COPY react-app ./react-app
 COPY libs ./libs
 
-# Install ALL dependencies (including devDeps for build)
+# Install all dependencies
 RUN npm ci
 
-# Build
+# Build both apps
 RUN npx nx build react-app
 RUN npx nx build server
 
@@ -22,16 +24,21 @@ RUN npx nx build server
 FROM node:20-alpine
 WORKDIR /app
 
-# Install production dependencies for the server
-COPY server/package*.json ./
-RUN npm install --omit=dev
+# 1. Copy backend build 
+# (Based on server/package.json: outputPath is "server/dist")
+COPY --from=builder /app/server/dist ./server/dist
 
-# find the directories inside /app/dist/
-# This assumes the build output is somewhere inside /app/dist/
-COPY --from=builder /app/dist/ ./dist-temp/
+# 2. Copy frontend build
+# (Nx default for Vite is usually dist/react-app at the root)
+COPY --from=builder /app/dist/react-app ./public
+
+# 3. Setup Backend Dependencies
+COPY server/package*.json ./server/
+RUN cd server && npm install --omit=dev
 
 # Expose port
 EXPOSE 3000
 
-# shell command to find the main.js and run it
-CMD find ./dist-temp -name "main.js" -exec node {} \;
+# 4. Start Server
+# Since bundle is false, the entry point is mirrored from src
+CMD ["node", "server/dist/src/main.js"]
