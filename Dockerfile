@@ -17,8 +17,8 @@ COPY libs ./libs
 RUN npm install --package-lock-only && npm ci
 
 # Build frontend and backend
-RUN npx nx build react-app --skip-nx-cloud
-RUN npx nx build server --skip-nx-cloud
+RUN npx nx build react-app
+RUN npx nx build server
 
 # ===== Stage 2: Production image =====
 FROM node:20-alpine
