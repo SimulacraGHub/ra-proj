@@ -27,11 +27,11 @@ WORKDIR /app
 # Copy only backend package files first
 COPY server/package*.json ./server/
 
-# Install only production dependencies
+# Install production dependencies
 RUN cd server && npm install --omit=dev
 
 # Copy backend build AFTER dependencies
-COPY --from=builder /app/server/dist ./server
+COPY --from=builder /app/server/dist/. ./server/  # <-- note the dot
 
 # Copy frontend build
 COPY --from=builder /app/react-app/dist ./server/react-app/dist
