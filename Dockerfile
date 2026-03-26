@@ -1,6 +1,7 @@
 # ===== Stage 1: Builder =====
 FROM node:20-alpine AS builder
 WORKDIR /app
+
 ENV VITE_API_URL=https://ra-proj-production.up.railway.app
 ENV NX_NO_CLOUD=true
 
@@ -17,16 +18,20 @@ RUN npx nx build server
 FROM node:20-alpine
 WORKDIR /app
 
-COPY --from=builder /app/server/dist ./server/dist
+# 1. Copy backend build into /app/server/dist
+# This puts main.js at /app/server/dist/main.js
+COPY --from=builder /app/server/dist/. ./server/dist/
 
-# 2. Put frontend exactly in /app/react-app/dist
-COPY --from=builder /app/react-app/dist ./react-app/dist
+# 2. Copy frontend build into /app/react-app/dist
+COPY --from=builder /app/react-app/dist/. ./react-app/dist/
 
 # 3. Setup Backend Dependencies
 COPY server/package*.json ./server/
 RUN cd server && npm install --omit=dev
 
-EXPOSE 8080
+# 4. Environment
+ENV NODE_ENV=production
+EXPOSE 3000
 
-# Start from the root so the relative paths match
-CMD ["node", "server/dist/src/main.js"]
+# 5. Start the server
+CMD ["sh", "-c", "node $(find server/dist -name main.js | head -n 1)"]
