@@ -30,8 +30,10 @@ COPY server/package*.json ./server/
 # Install production dependencies
 RUN cd server && npm install --omit=dev
 
-# Copy backend build AFTER dependencies
-COPY --from=builder /app/server/dist/. ./server/
+# Copy backend build AFTER dependencies, flatten
+COPY --from=builder /app/server/dist/main.js ./server/main.js
+COPY --from=builder /app/server/dist/server ./server/server
+COPY --from=builder /app/server/dist/tsconfig.app.tsbuildinfo ./server/
 
 # Copy frontend build
 COPY --from=builder /app/react-app/dist ./server/react-app/dist
