@@ -31,7 +31,7 @@ COPY server/package*.json ./server/
 RUN cd server && npm install --omit=dev
 
 # Copy backend build AFTER dependencies
-COPY --from=builder /app/server/dist/. ./server/  # <-- note the dot
+COPY --from=builder /app/server/dist/. ./server/
 
 # Copy frontend build
 COPY --from=builder /app/react-app/dist ./server/react-app/dist
